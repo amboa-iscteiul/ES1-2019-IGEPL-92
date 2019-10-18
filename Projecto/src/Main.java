@@ -5,6 +5,10 @@ public class Main {
 		System.out.println("hello");
 	}
 	
+	public void method1() {
+		System.out.println("hello2");
+	}
+	
 	
 	
 }
