@@ -9,9 +9,7 @@ public class Main {
 		System.out.println("hello2");
 	}
 	
-	public void method2() {
-		System.out.println("eu quero dormir");
-	}
+	//////////////////
 	
 	
 	
