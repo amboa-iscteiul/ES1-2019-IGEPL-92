@@ -6,7 +6,7 @@ public class Main {
 	}
 	
 	public void master(){
-		System.out.println("teste do paulo");
+		System.out.println("master");
 	}
 
 }
