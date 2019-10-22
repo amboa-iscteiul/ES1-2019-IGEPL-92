@@ -5,6 +5,8 @@ public class Main {
 		System.out.println("grupo 92");
 	}
 	
-	
+	public void testePaulo(){
+		System.out.println("teste do paulo");
+	}
 
 }
