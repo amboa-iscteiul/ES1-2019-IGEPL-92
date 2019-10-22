@@ -5,7 +5,7 @@ public class Main {
 		System.out.println("grupo 92");
 	}
 	
-	public void testePaulo(){
+	public void master(){
 		System.out.println("teste do paulo");
 	}
 
