@@ -1,18 +1,10 @@
 
 public class Main {
+	
+	public int attribute = 0;
 
-	public static void main(String [] args) {
-		System.out.println("hello");
+	public static void main(String[] args) {
+		System.out.println("grupo 92");
 	}
-	
-	public void method1() {
-		System.out.println("hello2");
-	}
-	
-	//////////////////
-	
-	
-	
+
 }
-
-
