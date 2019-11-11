@@ -38,6 +38,7 @@ public class App {
 			    Iterator<Cell> cellIterator = row.cellIterator();
 			    while (cellIterator.hasNext()) {
 			    	Cell cell = cellIterator.next();
+				    //Check the cell type and format accordingly
 			    	switch (cell.getCellType()){
 				        case NUMERIC : 
 				            System.out.print(cell.getNumericCellValue() + "\t");
@@ -46,7 +47,6 @@ public class App {
 				            System.out.print(cell.getStringCellValue() + "\t");
 				            break;
 			        }
-			    //Check the cell type and format accordingly
 			    }
 			    System.out.println("\n");
 		    }
