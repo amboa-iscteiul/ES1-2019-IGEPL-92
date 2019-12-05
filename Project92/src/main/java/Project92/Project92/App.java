@@ -2,6 +2,7 @@ package Project92.Project92;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,8 +15,10 @@ public class App {
 	
 	
 	
-    public static void main( String[] args ){
+    public static void main( String[] args ) throws FileNotFoundException{
         System.out.println( "Hello World!" );
+        File fis=new File("C:\\Users\\Jasmine\\Desktop\\Univ\\ES1_Grupo92\\ES1-2019-IGEPL-92\\Project92\\Long-Method.xlsx");  
+        readExcelFile(fis);
     }
     
     
