@@ -10,21 +10,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Avaliacao_Ferramentas {
 
-	File file = new File("Long-Method.xlsx");
-	XSSFSheet excel_sheet;
+	private static File file = new File("Long-Method.xlsx");
+	private static XSSFSheet excel_sheet;
 
 	public static void main(String[] args) {
-		Avaliacao_Ferramentas ava = new Avaliacao_Ferramentas();
-		ava.getSheet();
-		ava.dii("iPlasma");
+		Avaliacao_Ferramentas.getSheet();
+		Avaliacao_Ferramentas.dii("iPlasma");
 	}
 
-	private void getSheet() {
+	private static void getSheet() {
 		try {
-			FileInputStream file = new FileInputStream(this.file);
+			FileInputStream file = new FileInputStream(Avaliacao_Ferramentas.file);
 			@SuppressWarnings("resource")
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
-			System.out.println("Sheet done");
 			excel_sheet = workbook.getSheetAt(0);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -33,7 +31,8 @@ public class Avaliacao_Ferramentas {
 		}
 	}
 
-	public int dci(String ferramenta) {
+	public static int dci(String ferramenta) {
+		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
 		boolean aux;
 		boolean ferr_bool;
@@ -42,7 +41,6 @@ public class Avaliacao_Ferramentas {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			ferr_bool = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				System.out.println(ferramenta + " " + i);
 				if (aux == ferr_bool && aux == true)
 					dci++;
 			}
@@ -54,7 +52,8 @@ public class Avaliacao_Ferramentas {
 		return dci;
 	}
 
-	public int dii(String ferramenta) {
+	public static int dii(String ferramenta) {
+		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
 		boolean aux;
 		int maxRows = excel_sheet.getLastRowNum();
@@ -72,7 +71,8 @@ public class Avaliacao_Ferramentas {
 		return dii;
 	}
 
-	public int adci(String ferramenta) {
+	public static int adci(String ferramenta) {
+		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
 		boolean aux;
 		int maxRows = excel_sheet.getLastRowNum();
@@ -90,7 +90,8 @@ public class Avaliacao_Ferramentas {
 		return adci;
 	}
 
-	public int adii(String ferramenta) {
+	public static int adii(String ferramenta) {
+		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
 		boolean aux;
 		int maxRows = excel_sheet.getLastRowNum();
