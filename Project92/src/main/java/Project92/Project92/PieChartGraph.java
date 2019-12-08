@@ -17,8 +17,9 @@ public class PieChartGraph extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		ObservableList<PieChart.Data> listOfData = FXCollections.observableArrayList(
-				new PieChart.Data("Section 1", 2000), new PieChart.Data("Section 1", 500),
-				new PieChart.Data("Section 2", 100));
+				new PieChart.Data("Section 1", 2000), 
+				new PieChart.Data("Section 2", 500),
+				new PieChart.Data("Section 3", 100));
 
 		PieChart chart = new PieChart(listOfData);
 
