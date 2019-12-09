@@ -1,11 +1,14 @@
 package Project92.Project92;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,8 +35,8 @@ public class Proj_Frame {
 		frame.setLayout(new BorderLayout());
 
 		JPanel tools_pane = new JPanel();
-		JPanel titulos = new JPanel(new GridLayout(1,2));
-		
+		JPanel titulos = new JPanel(new GridLayout(1, 2));
+
 		tools_pane.setLayout(new BorderLayout());
 		frame.add(tools_pane, BorderLayout.CENTER);
 
@@ -43,8 +46,8 @@ public class Proj_Frame {
 		titulos.add(PMD);
 		titulos.add(iPlasma);
 		tools_pane.add(titulos, BorderLayout.NORTH);
-		
-		JPanel metodos = new JPanel(new GridLayout(4,4));
+
+		JPanel metodos = new JPanel(new GridLayout(4, 4));
 		for (int i = 1; i < 5; i++) {
 			for (int j = 0; j < 4; j++) {
 				switch (i) {
@@ -110,7 +113,7 @@ public class Proj_Frame {
 				}
 			}
 		}
-		
+
 		tools_pane.add(metodos, BorderLayout.CENTER);
 
 		// Button to activate values
@@ -121,19 +124,35 @@ public class Proj_Frame {
 					show = true;
 					for (JLabel aux : labels)
 						aux.setVisible(true);
-				}
-				else {
+				} else {
 					show = false;
-					for (JLabel aux : labels)
+					for (JLabel aux : labels) {
 						aux.setVisible(false);
+					}
 				}
 			}
 		});
 
 		frame.add(activate, BorderLayout.SOUTH);
+		abrirExcel();
 	}
 
-	public void init() {
+	private void abrirExcel() {
+		JButton open_excel = new JButton("Abrir Excel");
+		frame.add(open_excel, BorderLayout.EAST);
+		open_excel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().open(new File("Long-Method.xlsx"));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	private void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
 		frame.setSize(350, 200);
