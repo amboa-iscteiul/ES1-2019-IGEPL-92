@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,7 +43,7 @@ public class Proj_Frame {
 		titulos.add(iPlasma);
 		tools_pane.add(titulos, BorderLayout.NORTH);
 		tools_pane.add(metodos, BorderLayout.CENTER);
-		consultarIndicadores(metodos);
+		
 		// ------------------------------------------------------------------------------------
 		// panel which will contain 2 others to sort buttons
 		JPanel south = new JPanel(new GridLayout(2, 1));
@@ -52,15 +53,49 @@ public class Proj_Frame {
 		// -----------------------------------------------------------------------------------
 		south.add(up);
 		south.add(down);
-
-		abrirExcel(up);
 		
+		//botoes e suas funções do painel up presente no south
+		consultarIndicadores(metodos, up);
+		abrirExcel(up);
+		criarGrafico(up);//por fazer
+			
+		//adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
+		frame.add(south, BorderLayout.SOUTH);
+	}
+	
+	private void criarGrafico(JPanel up) {
+		JButton grafico = new JButton("Comparar ferramentas");
+		up.add(grafico);
+		//começar ação correspondente ao botão
+		grafico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Proj_Frame.escolherTipoGrafico();
+			}
+		});
+	}
+	
+	private static void escolherTipoGrafico() {
+		//configurações da frame onde utilizador escolhe o que será utilizado
+		JFrame auxiliar = new JFrame("Escolha o tipo de gráfico");
+		auxiliar.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		auxiliar.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
+		auxiliar.setVisible(true);
+		auxiliar.setLayout(new GridLayout(2,1));
+		
+		//criar titulo
+		JLabel titulo = new JLabel("Escolha o gráfico pretendido");
+		auxiliar.add(titulo);
+		
+		//criar comboBox
+		JComboBox escolhas = new JComboBox();
+		
 	}
 
-	private void abrirExcel(JPanel pan) {
+	private void abrirExcel(JPanel up) {
 		JButton open_excel = new JButton("Abrir Excel");
-		pan.add(open_excel);
+		up.add(open_excel);
 		open_excel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -73,7 +108,7 @@ public class Proj_Frame {
 
 	}
 
-	private void consultarIndicadores(JPanel metodos) {
+	private void consultarIndicadores(JPanel metodos, JPanel up) {
 		for (int i = 1; i < 5; i++) {
 			for (int j = 0; j < 4; j++) {
 				switch (i) {
@@ -144,7 +179,7 @@ public class Proj_Frame {
 			}
 		}
 		// Button to show values
-		JButton activate = new JButton("Calcular indicadores de qualidade");
+		JButton activate = new JButton("Calcular indicadores");
 		activate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!show) {
@@ -159,13 +194,13 @@ public class Proj_Frame {
 				}
 			}
 		});
-		frame.add(activate, BorderLayout.SOUTH);
+		up.add(activate, BorderLayout.SOUTH);
 	}
 
 	private void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
-		frame.setSize(350, 200);
+		frame.setSize(400, 250);
 		frame.setVisible(true);
 	}
 
