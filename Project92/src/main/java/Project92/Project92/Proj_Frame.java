@@ -31,23 +31,49 @@ public class Proj_Frame {
 	}
 
 	public void addFrameContent() {
-		// setting layout- 2 columns for tools, 4 rows for evaluation (1 for tools)
 		frame.setLayout(new BorderLayout());
 
-		JPanel tools_pane = new JPanel();
+		JPanel tools_pane = new JPanel(new BorderLayout());
 		JPanel titulos = new JPanel(new GridLayout(1, 2));
-
-		tools_pane.setLayout(new BorderLayout());
-		frame.add(tools_pane, BorderLayout.CENTER);
-
+		JPanel metodos = new JPanel(new GridLayout(4, 4));
 		JLabel PMD = new JLabel("PMD");
 		JLabel iPlasma = new JLabel("iPlasma");
-
 		titulos.add(PMD);
 		titulos.add(iPlasma);
 		tools_pane.add(titulos, BorderLayout.NORTH);
+		tools_pane.add(metodos, BorderLayout.CENTER);
+		consultarIndicadores(metodos);
+		// ------------------------------------------------------------------------------------
+		// panel which will contain 2 others to sort buttons
+		JPanel south = new JPanel(new GridLayout(2, 1));
+		// panels belonging to south panel
+		JPanel up = new JPanel(); // graph, calculate dci, dii, etc and excel button
+		JPanel down = new JPanel(); // simple and advanced search
+		// -----------------------------------------------------------------------------------
+		south.add(up);
+		south.add(down);
 
-		JPanel metodos = new JPanel(new GridLayout(4, 4));
+		abrirExcel(up);
+		
+		frame.add(tools_pane, BorderLayout.CENTER);
+	}
+
+	private void abrirExcel(JPanel pan) {
+		JButton open_excel = new JButton("Abrir Excel");
+		pan.add(open_excel);
+		open_excel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().open(new File("Long-Method.xlsx"));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+
+	}
+
+	private void consultarIndicadores(JPanel metodos) {
 		for (int i = 1; i < 5; i++) {
 			for (int j = 0; j < 4; j++) {
 				switch (i) {
@@ -58,12 +84,13 @@ public class Proj_Frame {
 					else if (j == 1) {
 						label = new JLabel("" + Avaliacao_Ferramentas.dci("PMD"));
 						label.setVisible(false);
+						labels.add(label);
 					} else {
 						label = new JLabel("" + Avaliacao_Ferramentas.dci("iPlasma"));
 						label.setVisible(false);
+						labels.add(label);
 					}
 					metodos.add(label);
-					labels.add(label);
 					break;
 				case 2:
 					JLabel label1;
@@ -72,12 +99,13 @@ public class Proj_Frame {
 					else if (j == 1) {
 						label1 = new JLabel("" + Avaliacao_Ferramentas.dii("PMD"));
 						label1.setVisible(false);
+						labels.add(label1);
 					} else {
 						label1 = new JLabel("" + Avaliacao_Ferramentas.dii("iPlasma"));
 						label1.setVisible(false);
+						labels.add(label1);
 					}
 					metodos.add(label1);
-					labels.add(label1);
 					break;
 				case 3:
 					JLabel label2;
@@ -86,12 +114,13 @@ public class Proj_Frame {
 					else if (j == 1) {
 						label2 = new JLabel("" + Avaliacao_Ferramentas.adci("PMD"));
 						label2.setVisible(false);
+						labels.add(label2);
 					} else {
 						label2 = new JLabel("" + Avaliacao_Ferramentas.adci("iPlasma"));
 						label2.setVisible(false);
+						labels.add(label2);
 					}
 					metodos.add(label2);
-					labels.add(label2);
 					break;
 				case 4:
 					JLabel label3;
@@ -100,12 +129,13 @@ public class Proj_Frame {
 					else if (j == 1) {
 						label3 = new JLabel("" + Avaliacao_Ferramentas.adii("PMD"));
 						label3.setVisible(false);
+						labels.add(label3);
 					} else {
 						label3 = new JLabel("" + Avaliacao_Ferramentas.adii("iPlasma"));
 						label3.setVisible(false);
+						labels.add(label3);
 					}
 					metodos.add(label3);
-					labels.add(label3);
 					break;
 				default:
 					System.out.println("ALGUMA COISA ERRADA");
@@ -113,10 +143,7 @@ public class Proj_Frame {
 				}
 			}
 		}
-
-		tools_pane.add(metodos, BorderLayout.CENTER);
-
-		// Button to activate values
+		// Button to show values
 		JButton activate = new JButton("Calcular indicadores de qualidade");
 		activate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,24 +159,7 @@ public class Proj_Frame {
 				}
 			}
 		});
-
 		frame.add(activate, BorderLayout.SOUTH);
-		abrirExcel();
-	}
-
-	private void abrirExcel() {
-		JButton open_excel = new JButton("Abrir Excel");
-		frame.add(open_excel, BorderLayout.EAST);
-		open_excel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Desktop.getDesktop().open(new File("Long-Method.xlsx"));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
 	}
 
 	private void init() {
