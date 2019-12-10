@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class PieChartGraph extends Application {
 
 	public static Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();

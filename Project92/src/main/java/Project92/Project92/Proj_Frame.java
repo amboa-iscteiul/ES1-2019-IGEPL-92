@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import javafx.application.Application;
@@ -32,6 +34,9 @@ public class Proj_Frame{
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private boolean show = false;
 	public static Avaliacao_Ferramentas Avaliacao_Ferramentas= new Avaliacao_Ferramentas();
+
+	private boolean ativo_long = false;
+	private boolean ativo_feat = false;
 
 	public Proj_Frame() {
 		frame = new JFrame("projeto");
@@ -69,6 +74,10 @@ public class Proj_Frame{
 		abrirExcel(up);
 		criarGrafico(up);// por fazer
 
+		// botoes e suas funções do painel down presente no south
+		procura_simples(down);
+		procura_avançada();
+
 		// adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
 		frame.add(south, BorderLayout.SOUTH);
@@ -85,23 +94,21 @@ public class Proj_Frame{
 		});
 	}
 
-	@SuppressWarnings("static-access")
 	private static void escolherTipoGrafico() {
 		// configurações da frame onde utilizador escolhe o que será utilizado
 		JFrame auxiliar = new JFrame("Escolha o tipo de gráfico");
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		auxiliar.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 		auxiliar.setVisible(true);
-		auxiliar.setLayout(new GridLayout(3,1));
+		auxiliar.setLayout(new GridLayout(3, 1));
 
 		// criar titulo
 		JLabel titulo = new JLabel("Escolha o gráfico pretendido");
 		auxiliar.add(titulo);
 
 		// criar comboBox
-		final JComboBox<String> escolhas = new JComboBox<String>();
-		escolhas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfico", "Pie Chart", "Tabela" }));
-		escolhas.setAlignmentX(escolhas.CENTER_ALIGNMENT);
+		String[] str = new String[] { "Gráfico", "Pie Chart", "Tabela" };
+		final JComboBox<String> escolhas = new JComboBox<String>(str);
 		escolhas.setPreferredSize(new Dimension(75, escolhas.getPreferredSize().height));
 		System.out.println(escolhas.isPreferredSizeSet());
 		auxiliar.add(escolhas);
@@ -138,6 +145,144 @@ public class Proj_Frame{
 
 	}
 
+	private void procura_simples(JPanel down) {
+		JButton proc = new JButton("Procura Simples");
+		down.add(proc);
+		proc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// ComboBox para símbolos (< ou >) e caixa de texto para inserir thresholds
+				JFrame aux = new JFrame("Procura Simples");
+				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+				aux.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
+				aux.setVisible(true);
+				aux.setLayout(new BorderLayout());
+				JPanel geral = new JPanel(new GridLayout(2, 1));
+
+				// is_long_method ou feature_envy
+				JPanel long_method = new JPanel();
+				JPanel feature = new JPanel();
+
+				// mudar layouts dos paineis
+				long_method.setLayout(new BorderLayout());
+				feature.setLayout(new BorderLayout());
+
+				// geral para ambosos paineis
+				ArrayList<JComboBox<String>> combos = new ArrayList<>();
+				String[] v_sinais = new String[] { ">", "<", ">=", "<=" }; // RETIRAR SE NECESSÁRIO
+				for (int i = 0; i < 4; i++)
+					combos.add(new JComboBox<String>(v_sinais));
+				ArrayList<JLabel> labels_need = new ArrayList<>();
+				for (int i = 0; i < 2; i++)
+					labels_need.add(new JLabel("Thresholds e Sinais:"));
+
+				// criar itens usados em long_method
+				final JRadioButton long_meth = new JRadioButton("is_long_method");
+				final JPanel thresholds_long = new JPanel(new GridLayout(2, 1)); // titulo mais painel
+				final JPanel limites_sinais = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
+				JLabel metrica1_long = new JLabel("POR METRICA: "); // POR METRICA AQUI
+				JLabel metrica2_long = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
+				JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
+
+				// adicionar a thresholds_long
+				thresholds_long.add(labels_need.get(0));
+				thresholds_long.add(limites_sinais);
+
+				// adicionar a limites_sinais, linha 1
+				limites_sinais.add(metrica1_long);
+				limites_sinais.add(combos.get(0));
+				limites_sinais.add(threshold_m1_long);
+
+				// adicionar a limites_sinais, linha 2
+				limites_sinais.add(metrica2_long);
+				limites_sinais.add(combos.get(1));
+				limites_sinais.add(threshold_m2_long);
+
+				limites_sinais.setVisible(false);
+
+				// criar itens usados em feature
+				final JRadioButton feature_envy = new JRadioButton("feature_envy");
+				final JPanel thresholds_feat = new JPanel(new GridLayout(2, 1)); // titulo mais painel
+				final JPanel limites_sinais_feat = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
+				JLabel metrica1_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				JLabel metrica2_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				JTextField threshold_m1_feat = new JTextField("Limite para métrica 1");
+				JTextField threshold_m2_feat = new JTextField("Limite para métrica 2");
+
+				// adicionar a thresholds_long
+				thresholds_feat.add(labels_need.get(1));
+				thresholds_feat.add(limites_sinais_feat);
+
+				// adicionar a limites_sinais, linha 1 (feature)
+				limites_sinais_feat.add(metrica1_feat);
+				limites_sinais_feat.add(combos.get(2));
+				limites_sinais_feat.add(threshold_m1_feat);
+
+				// adicionar a limites_sinais, linha 2 (feature)
+				limites_sinais_feat.add(metrica2_feat);
+				limites_sinais_feat.add(combos.get(3));
+				limites_sinais_feat.add(threshold_m2_feat);
+
+				limites_sinais_feat.setVisible(false);
+
+				// adicionar aos paineis
+				long_method.add(long_meth, BorderLayout.WEST);
+				long_method.add(thresholds_long, BorderLayout.CENTER);
+				feature.add(feature_envy, BorderLayout.WEST);
+				feature.add(thresholds_feat, BorderLayout.CENTER);
+
+				// ação quando se escolhe long_method
+				long_meth.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (long_meth.isSelected() && !ativo_long) {
+							feature_envy.setEnabled(false);
+							limites_sinais.setVisible(true);
+							ativo_long = true;
+						} else if (ativo_long) {
+							feature_envy.setEnabled(true);
+							limites_sinais.setVisible(false);
+							ativo_long = false;
+						}
+					}
+				});
+
+				// ação quando se escolhe feature_envy
+				feature_envy.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (feature_envy.isSelected() && !ativo_feat) {
+							long_meth.setEnabled(false);
+							limites_sinais_feat.setVisible(true);
+							ativo_feat = true;
+						} else if (ativo_feat) {
+							long_meth.setEnabled(true);
+							limites_sinais_feat.setVisible(false);
+							ativo_feat = false;
+						}
+					}
+				});
+				//fazer e adicionar botões
+				JPanel botoes = new JPanel();
+				JButton pre_vis = new JButton("Pré-Visualizar");
+				JButton finish = new JButton("Ok");
+
+				botoes.add(pre_vis);
+				botoes.add(finish);
+				
+				// adicionar ao painel geral e à frame
+				geral.add(long_method);
+				geral.add(feature);
+				aux.add(geral, BorderLayout.CENTER);
+				aux.add(botoes, BorderLayout.SOUTH);
+
+				aux.pack();
+			}
+		});
+	}
+
+	private void procura_avançada() {
+
+	}
+
 	private void abrirExcel(JPanel up) {
 		JButton open_excel = new JButton("Abrir Excel");
 		up.add(open_excel);
@@ -151,6 +296,10 @@ public class Proj_Frame{
 			}
 		});
 
+	}
+	
+	private void importarExcel() { //PAULO
+		
 	}
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {
