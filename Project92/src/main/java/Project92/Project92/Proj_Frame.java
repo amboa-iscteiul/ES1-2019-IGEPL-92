@@ -43,7 +43,7 @@ public class Proj_Frame {
 		titulos.add(iPlasma);
 		tools_pane.add(titulos, BorderLayout.NORTH);
 		tools_pane.add(metodos, BorderLayout.CENTER);
-		
+
 		// ------------------------------------------------------------------------------------
 		// panel which will contain 2 others to sort buttons
 		JPanel south = new JPanel(new GridLayout(2, 1));
@@ -53,44 +53,77 @@ public class Proj_Frame {
 		// -----------------------------------------------------------------------------------
 		south.add(up);
 		south.add(down);
-		
-		//botoes e suas funções do painel up presente no south
+
+		// botoes e suas funções do painel up presente no south
 		consultarIndicadores(metodos, up);
 		abrirExcel(up);
-		criarGrafico(up);//por fazer
-			
-		//adicionar à frame!!!!!!
+		criarGrafico(up);// por fazer
+
+		// adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
 		frame.add(south, BorderLayout.SOUTH);
 	}
-	
+
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
-		//começar ação correspondente ao botão
+		// começar ação correspondente ao botão
 		grafico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Proj_Frame.escolherTipoGrafico();
 			}
 		});
 	}
-	
+
+	@SuppressWarnings("static-access")
 	private static void escolherTipoGrafico() {
-		//configurações da frame onde utilizador escolhe o que será utilizado
+		// configurações da frame onde utilizador escolhe o que será utilizado
 		JFrame auxiliar = new JFrame("Escolha o tipo de gráfico");
-		auxiliar.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		auxiliar.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 		auxiliar.setVisible(true);
-		auxiliar.setLayout(new GridLayout(2,1));
-		
-		//criar titulo
+		auxiliar.setLayout(new GridLayout(3,1));
+
+		// criar titulo
 		JLabel titulo = new JLabel("Escolha o gráfico pretendido");
 		auxiliar.add(titulo);
-		
-		//criar comboBox
-		JComboBox escolhas = new JComboBox();
-		
+
+		// criar comboBox
+		final JComboBox<String> escolhas = new JComboBox<String>();
+		escolhas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gráfico", "Pie Chart", "Tabela" }));
+		escolhas.setAlignmentX(escolhas.CENTER_ALIGNMENT);
+		escolhas.setPreferredSize(new Dimension(75, escolhas.getPreferredSize().height));
+		System.out.println(escolhas.isPreferredSizeSet());
+		auxiliar.add(escolhas);
+
+		// criar botão para escolher o tipo de gráfico
+		JButton ok = new JButton("Ok");
+		auxiliar.add(ok);
+
+		// carregar em "ok" para ler o que foi selecionado na comboBox e devolver
+		// tabela/pie/grafico
+		ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (((String) escolhas.getSelectedItem()).equals("Gráfico")) {
+					// devolver gráfico
+					System.out.println("Teste Gráfico");
+				}
+
+				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
+					// devolver pie chart
+					System.out.println("Teste Pie Chart");
+				}
+
+				else {
+					// devolver tabela
+					// opcional: mudar else para else if com condição "igual" às anteriores
+					System.out.println("Teste Tabela");
+				}
+			}
+		});
+		auxiliar.pack();
+//		auxiliar.setSize(300, 300);
+
 	}
 
 	private void abrirExcel(JPanel up) {
@@ -202,6 +235,7 @@ public class Proj_Frame {
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
 		frame.setSize(400, 250);
 		frame.setVisible(true);
+		frame.pack();
 	}
 
 	public static void main(String[] args) {
