@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -110,5 +111,20 @@ public class Avaliacao_Ferramentas {
 		System.out.println("ADII da ferramenta " + ferramenta + " é igual a: " + adii);
 		return adii;
 	}
+	
+	public ArrayList<Integer>getListOfAllValues(){
+		ArrayList<Integer>listOfValues = new ArrayList<>();
+		listOfValues.add(Avaliacao_Ferramentas.dci("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.dci("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.dii("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.dii("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.adci("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.adci("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.adii("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.adii("iPlasma"));
+		return listOfValues;
+	}
+	
+	
 
 }

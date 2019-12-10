@@ -17,11 +17,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class Proj_Frame {
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.stage.Stage;
+
+
+public class Proj_Frame{
 
 	private JFrame frame;
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private boolean show = false;
+	public static Avaliacao_Ferramentas Avaliacao_Ferramentas= new Avaliacao_Ferramentas();
 
 	public Proj_Frame() {
 		frame = new JFrame("projeto");
@@ -108,10 +118,12 @@ public class Proj_Frame {
 					// devolver gráfico
 					System.out.println("Teste Gráfico");
 				}
-
+				
 				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
-					// devolver pie chart
-					System.out.println("Teste Pie Chart");
+					System.out.println("A imprimir PieChart");
+					//ALERT: Only called once!
+					PieChartGraph p = new PieChartGraph();		
+					p.display(null);
 				}
 
 				else {
@@ -230,7 +242,7 @@ public class Proj_Frame {
 		up.add(activate, BorderLayout.SOUTH);
 	}
 
-	private void init() {
+	public void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
 		frame.setSize(400, 250);
@@ -241,5 +253,6 @@ public class Proj_Frame {
 	public static void main(String[] args) {
 		new Proj_Frame();
 	}
+
 
 }

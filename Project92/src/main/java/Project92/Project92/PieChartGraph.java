@@ -1,5 +1,9 @@
 package Project92.Project92;
 
+import java.util.ArrayList;
+
+import org.apache.poi.util.SystemOutLogger;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,23 +14,36 @@ import javafx.stage.Stage;
 
 public class PieChartGraph extends Application {
 
-	public static void main(String[] args) {
+	public static Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();
+
+	public void display(String[] args) {
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
 		ObservableList<PieChart.Data> listOfData = FXCollections.observableArrayList(
-				new PieChart.Data("Section 1", 2000), 
-				new PieChart.Data("Section 2", 500),
-				new PieChart.Data("Section 3", 100));
+				data("DCI PMD", Avaliacao_Ferramentas.dci("PMD")),
+				data("DCI iPlasma", Avaliacao_Ferramentas.dci("iPlasma")),
+				data("DII PMD", Avaliacao_Ferramentas.dii("PMD")),
+				data("DII iPlasma", Avaliacao_Ferramentas.dii("iPlasma")),
+				data("ADCI PMD", Avaliacao_Ferramentas.adci("PMD")),
+				data("ADCI iPlasma", Avaliacao_Ferramentas.adci("iPlasma")),
+				data("ADII PMD", Avaliacao_Ferramentas.adii("PMD")),
+				data("ADII iPlasma", Avaliacao_Ferramentas.adii("iPlasma")));
 
 		PieChart chart = new PieChart(listOfData);
 
 		Group group = new Group(chart);
 		Scene scene = new Scene(group, 500, 500);
-		primaryStage.setTitle("Pie Chart Example");
+		primaryStage.setTitle("Gráfico de Indicadores");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	public PieChart.Data data(String section, int value) {
+		PieChart.Data data = new PieChart.Data(section, value * 1000);
+		return data;
 	}
 }
