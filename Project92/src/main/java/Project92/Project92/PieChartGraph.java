@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class PieChartGraph extends Application {
 
 	public static void main(String[] args) {
