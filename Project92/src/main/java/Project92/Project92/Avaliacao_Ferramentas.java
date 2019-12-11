@@ -172,7 +172,7 @@ public class Avaliacao_Ferramentas {
 				 }
 			 }
 		
-		System.out.println(list);
+		//System.out.println(list);
 	}
 	
 	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
@@ -299,7 +299,7 @@ public class Avaliacao_Ferramentas {
 			}//fim de oitava hipotese OR e >,<
 		
 		}//FIM DO OR
-		System.out.println(list);
+		//System.out.println(list);
 }
 	
 
