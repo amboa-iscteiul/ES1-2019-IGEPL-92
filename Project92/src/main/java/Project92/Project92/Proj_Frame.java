@@ -19,14 +19,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.stage.Stage;
-
 
 public class Proj_Frame{
 
@@ -280,7 +272,7 @@ public class Proj_Frame{
 	}
 
 	private void procura_avançada() {
-
+		
 	}
 
 	private void abrirExcel(JPanel up) {
