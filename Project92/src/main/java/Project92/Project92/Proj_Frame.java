@@ -27,13 +27,12 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
-
-public class Proj_Frame{
+public class Proj_Frame {
 
 	private JFrame frame;
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private boolean show = false;
-	public static Avaliacao_Ferramentas Avaliacao_Ferramentas= new Avaliacao_Ferramentas();
+	public static Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();
 
 	private boolean ativo_long = false;
 	private boolean ativo_feat = false;
@@ -125,11 +124,11 @@ public class Proj_Frame{
 					// devolver gráfico
 					System.out.println("Teste Gráfico");
 				}
-				
+
 				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
 					System.out.println("A imprimir PieChart");
-					//ALERT: Only called once!
-					PieChartGraph p = new PieChartGraph();		
+					// ALERT: Only called once!
+					PieChartGraph p = new PieChartGraph();
 					p.display(null);
 				}
 
@@ -167,8 +166,8 @@ public class Proj_Frame{
 				feature.setLayout(new BorderLayout());
 
 				// geral para ambosos paineis
-				ArrayList<JComboBox<String>> combos = new ArrayList<>();
-				String[] v_sinais = new String[] { ">", "<", ">=", "<=" }; // RETIRAR SE NECESSÁRIO
+				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
+				String[] v_sinais = new String[] { ">", "<" }; // RETIRAR SE NECESSÁRIO
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
 				ArrayList<JLabel> labels_need = new ArrayList<>();
@@ -179,10 +178,10 @@ public class Proj_Frame{
 				final JRadioButton long_meth = new JRadioButton("is_long_method");
 				final JPanel thresholds_long = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
-				JLabel metrica1_long = new JLabel("POR METRICA: "); // POR METRICA AQUI
-				JLabel metrica2_long = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
-				JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
+				JLabel metrica1_long = new JLabel("CYCLO: "); // POR METRICA AQUI
+				JLabel metrica2_long = new JLabel("LOC: "); // POR METRICA AQUI
+				final JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
+				final JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
 
 				// adicionar a thresholds_long
 				thresholds_long.add(labels_need.get(0));
@@ -260,14 +259,35 @@ public class Proj_Frame{
 						}
 					}
 				});
-				//fazer e adicionar botões
+				// fazer e adicionar botões
 				JPanel botoes = new JPanel();
 				JButton pre_vis = new JButton("Pré-Visualizar");
 				JButton finish = new JButton("Ok");
+				finish.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+                      String Simbolo_1= (String) combos.get(0).getSelectedItem();
+                      String Simbolo_2= (String) combos.get(1).getSelectedItem();
+                      String limite_cyclo =threshold_m1_long.getText();
+                      String limite_loc =threshold_m2_long.getText();
+                      double cyclo = Double.parseDouble(limite_cyclo);
+                      double loc = Double.parseDouble(limite_loc);
+                      //System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 + " cyclo = " + limite_cyclo + " loc = " + limite_loc);
+					  //System.out.println(loc + " " + cyclo);	
+					  ArrayList<Boolean> list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1, cyclo, Simbolo_2, loc);
+					  System.out.println(list);
+					  int dci = Avaliacao_Ferramentas.customized_dci(list);
+					  int dii = Avaliacao_Ferramentas.customized_dii(list);
+					  int adci = Avaliacao_Ferramentas.customized_adci(list);
+					  int adii = Avaliacao_Ferramentas.customized_adii(list);
+					  System.out.println("dci " + dci +" dii " + dii + " adci " + adci + " adii " + adii );
+						
+						
+					}
+				});
 
 				botoes.add(pre_vis);
 				botoes.add(finish);
-				
+
 				// adicionar ao painel geral e à frame
 				geral.add(long_method);
 				geral.add(feature);
@@ -297,9 +317,9 @@ public class Proj_Frame{
 		});
 
 	}
-	
-	private void importarExcel() { //PAULO
-		
+
+	private void importarExcel() { // PAULO
+
 	}
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {
@@ -402,6 +422,5 @@ public class Proj_Frame{
 	public static void main(String[] args) {
 		new Proj_Frame();
 	}
-
 
 }
