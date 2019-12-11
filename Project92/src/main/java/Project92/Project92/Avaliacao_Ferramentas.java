@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -14,12 +15,13 @@ public class Avaliacao_Ferramentas {
 	private static File file = new File("Long-Method.xlsx");
 	private static XSSFSheet excel_sheet;
 
-//	
-//	//main não necessária
-//	public static void main(String[] args) {
-//		Avaliacao_Ferramentas.getSheet();
-//		Avaliacao_Ferramentas.dii("iPlasma");
-//	}
+	public static void main(String[] args) {
+		Avaliacao_Ferramentas.getSheet();
+		Avaliacao_Ferramentas.dii("iPlasma");
+		//normal_search(">", 5, "<",10 );
+		Advance_search("ATFD", ">", 0, "LAA", ">", 0, "AND");
+	
+	}
 
 	private static void getSheet() {
 		try {
@@ -54,6 +56,252 @@ public class Avaliacao_Ferramentas {
 		System.out.println("DCI da ferramenta " + ferramenta + " é igual a: " + dci);
 		return dci;
 	}
+	public static int customized_dci(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int dci = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(aux == list.get(j) && aux == true) {
+				dci++;
+			}
+		}
+		return dci;	
+	}
+	public static int customized_dii(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int dii = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==true && aux == false) {
+				dii++;
+			}
+		}
+		return dii;	
+	}
+	public static int customized_adci(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int adci = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==false && aux == false) {
+				adci++;
+			}
+		}
+		return adci;	
+	}
+	public static int customized_adii(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int adii = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==false && aux == true) {
+				adii++;
+			}
+		}
+		return adii;	
+	}
+	
+	
+	
+	public static void normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
+		ArrayList<Boolean> list = new ArrayList<Boolean>();
+		int maxRows = excel_sheet.getLastRowNum();
+		double CYCLO;
+		double LOC;
+			 
+			 if(s_cyclo.equals(s_loc) && s_cyclo.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
+				 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
+				 
+				 if(CYCLO < threshold_cyclo && LOC < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			 else if(s_cyclo.equals(s_loc) && s_cyclo.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
+					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
+					 
+				 if(CYCLO > threshold_cyclo && LOC > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+			 }
+			 }
+			 
+			 else if(s_cyclo.equals(">") && s_loc.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
+					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
+				 
+				 if(CYCLO > threshold_cyclo && LOC < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 } 
+				 
+				 } 
+			 }
+			 else if(s_cyclo.equals("<") && s_loc.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
+					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
+				 if(CYCLO < threshold_cyclo && LOC > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 } 
+				 }
+			 }
+		
+		//System.out.println(list);
+	}
+	
+	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
+		int x=0;//numero da cell da metrica 1 escolhida
+		int y=0;//numero da cell da metrica 2 escolhida
+		int maxRows = excel_sheet.getLastRowNum();
+		ArrayList<Boolean> list = new ArrayList<Boolean>();
+		
+		//ter o numero da cell
+		for (int i = 4; i <= 7; i++) {
+			if(excel_sheet.getRow(0).getCell(i).getStringCellValue().equals(Metrica_1)) {
+				x=i-1;
+				System.out.println(excel_sheet.getRow(0).getCell(i).getStringCellValue() + " = " +"Metrica 1 = " +Metrica_1 + " " + "com cell a " +"x = " + x);
+}
+			if(excel_sheet.getRow(0).getCell(i).getStringCellValue().equals(Metrica_2)) {
+				y=i-1;
+				System.out.println(excel_sheet.getRow(0).getCell(i).getStringCellValue() + " = " + "Metrica 2 = " +Metrica_2 + " " + "com cell a " + "y = " +y);
+			}
+		}//fim do for++
+		
+//----------------------------------------------------------------------------------------------------		
+		if(Ope_Log.equals("AND")) {//INICIO DO AND----------------------------------
+			//inicio de primeira hipotese, AND e <
+			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals("<")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 < threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}
+			}//fim de primeira hipotese AND e <
+//--------------------------------------------------------------------------------------------------			
+			//inicio de segunda hipotese, AND e >
+			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 > threshold_Metrica_1 && value_M2 > threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}
+			
+			
+		}//fim de segunda  hipotese AND e >
+//-------------------------------------------------------------------------------------------------------
+		//inicio de terceira hipotese AND e <,>	
+			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 < threshold_Metrica_1 && value_M2 > threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}
+		}//fim de terceira hipotese AND e <,>		
+//--------------------------------------------------------------------------------------------------------			
+		//inicio de quarta hipotese AND e >,<	
+			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 > threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}	
+			}//fim de quarta hipotese AND e >,<
+//-------------------------------------------------------------------------------------------------------			
+		}//FIM DO AND--------------------------------------------------------------------------------------
+		
+		else if(Ope_Log.equals("OR")) {//INICIO DO OR--------------------------------------------------------------
+			//inicio da quinta hipotese OR e <
+			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals("<")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 < threshold_Metrica_1 || value_M2 < threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+			}
+		}//fim de quinta hipotese OR e <
+//------------------------------------------------------------------------------------------------
+			//inicio de sexta hipotese, OR e >
+			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 > threshold_Metrica_1 || value_M2 > threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}
+			
+			
+		}//fim de sexta hipotese OR e >
+//----------------------------------------------------------------------------------------------------
+			//inicio de sétima hipotese OR e <,>	
+			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 < threshold_Metrica_1 || value_M2 > threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}
+		}//fim de sétima hipotese OR e <,>	
+//------------------------------------------------------------------------------------------------------			
+			//inicio de oitava hipotese OR e >,<	
+			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
+				for (int i = 1; i < maxRows; i++) {
+					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					if(value_M1 > threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
+						list.add(true);
+					}else {list.add(false);}
+					
+				}	
+			}//fim de oitava hipotese OR e >,<
+		
+		}//FIM DO OR
+		//System.out.println(list);
+}
+	
 
 	public static int dii(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
@@ -111,20 +359,5 @@ public class Avaliacao_Ferramentas {
 		System.out.println("ADII da ferramenta " + ferramenta + " é igual a: " + adii);
 		return adii;
 	}
-	
-	public ArrayList<Integer>getListOfAllValues(){
-		ArrayList<Integer>listOfValues = new ArrayList<>();
-		listOfValues.add(Avaliacao_Ferramentas.dci("PMD"));
-		listOfValues.add(Avaliacao_Ferramentas.dci("iPlasma"));
-		listOfValues.add(Avaliacao_Ferramentas.dii("PMD"));
-		listOfValues.add(Avaliacao_Ferramentas.dii("iPlasma"));
-		listOfValues.add(Avaliacao_Ferramentas.adci("PMD"));
-		listOfValues.add(Avaliacao_Ferramentas.adci("iPlasma"));
-		listOfValues.add(Avaliacao_Ferramentas.adii("PMD"));
-		listOfValues.add(Avaliacao_Ferramentas.adii("iPlasma"));
-		return listOfValues;
-	}
-	
-	
 
 }
