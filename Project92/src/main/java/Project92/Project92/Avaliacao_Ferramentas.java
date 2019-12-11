@@ -56,6 +56,61 @@ public class Avaliacao_Ferramentas {
 		System.out.println("DCI da ferramenta " + ferramenta + " é igual a: " + dci);
 		return dci;
 	}
+	public static int customized_dci(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int dci = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(aux == list.get(j) && aux == true) {
+				dci++;
+			}
+		}
+		return dci;	
+	}
+	public static int customized_dii(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int dii = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==true && aux == false) {
+				dii++;
+			}
+		}
+		return dii;	
+	}
+	public static int customized_adci(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int adci = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==false && aux == false) {
+				adci++;
+			}
+		}
+		return adci;	
+	}
+	public static int customized_adii(ArrayList<Boolean> list) {
+		Avaliacao_Ferramentas.getSheet();
+		int adii = 0;
+		int maxRows = excel_sheet.getLastRowNum();
+		boolean aux;
+		for (int i = 1,j=0; i < maxRows; i++,j++) {
+			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			if(list.get(j)==false && aux == true) {
+				adii++;
+			}
+		}
+		return adii;	
+	}
+	
+	
+	
 	public static void normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
