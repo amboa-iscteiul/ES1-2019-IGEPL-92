@@ -13,12 +13,12 @@ public class Avaliacao_Ferramentas {
 	private static File file = new File("Long-Method.xlsx");
 	private static XSSFSheet excel_sheet;
 
-	
-	//main não necessária
-	public static void main(String[] args) {
-		Avaliacao_Ferramentas.getSheet();
-		Avaliacao_Ferramentas.dii("iPlasma");
-	}
+//	
+//	//main não necessária
+//	public static void main(String[] args) {
+//		Avaliacao_Ferramentas.getSheet();
+//		Avaliacao_Ferramentas.dii("iPlasma");
+//	}
 
 	private static void getSheet() {
 		try {
