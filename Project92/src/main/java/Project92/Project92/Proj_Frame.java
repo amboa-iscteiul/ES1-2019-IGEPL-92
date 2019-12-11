@@ -110,6 +110,7 @@ public class Proj_Frame {
 		// criar botão para escolher o tipo de gráfico
 		JButton ok = new JButton("Ok");
 		auxiliar.add(ok);
+				//PieChartGraph graf = new PieChartGraph();
 
 		// carregar em "ok" para ler o que foi selecionado na comboBox e devolver
 		// tabela/pie/grafico
@@ -122,6 +123,7 @@ public class Proj_Frame {
 
 				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
 					// devolver pie chart
+					
 					System.out.println("Teste Pie Chart");
 				}
 
