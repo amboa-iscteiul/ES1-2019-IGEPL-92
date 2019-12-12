@@ -113,7 +113,7 @@ public class Avaliacao_Ferramentas {
 	}
 	
 	public ArrayList<Integer>getListOfAllValues(){
-		ArrayList<Integer>listOfValues = new ArrayList<>();
+		ArrayList<Integer>listOfValues = new ArrayList();
 		listOfValues.add(Avaliacao_Ferramentas.dci("PMD"));
 		listOfValues.add(Avaliacao_Ferramentas.dci("iPlasma"));
 		listOfValues.add(Avaliacao_Ferramentas.dii("PMD"));

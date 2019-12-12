@@ -148,27 +148,10 @@ public class Proj_Frame{
 
 				else {
 					// devolver tabela
-					// opcional: mudar else para else if com condição "igual" às anteriores
 					
 					Table table = new Table();
 					table.criarJanela();
-					
-					/*
-					
-					JFrame aux= new JFrame();
-					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-					aux.setLocation(dimension.width / 2 - (220 / 2), dimension.height / 2 - (250 / 2));
-					//aux.setLayout(new BorderLayout());
-				//	JPanel p = new JPanel(new BorderLayout());
-					String data[][] = {{"PMD","140","18","261","0"},
-							{"iPlasma","140","0","279","0"}};
-					String column[] = {"Description","DCI","DII","ADCI","ADII"};
-					JTable tab= new JTable(data,column);
-					JScrollPane b= new  JScrollPane(tab);
-					aux.add(b);
-					aux.setVisible(true);
-					aux.pack();
-					*/
+				
 					System.out.println(" imprimir tabele");
 				}
 			}
