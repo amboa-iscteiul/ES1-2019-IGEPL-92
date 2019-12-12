@@ -103,7 +103,6 @@ public class Proj_Frame {
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
-		// começar ação correspondente ao botão
 		grafico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Proj_Frame.escolherTipoGrafico();
@@ -232,10 +231,10 @@ public class Proj_Frame {
 				final JRadioButton feature_envy = new JRadioButton("feature_envy");
 				final JPanel thresholds_feat = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais_feat = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
-				final JLabel metrica1_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				final JLabel metrica2_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				final JTextField threshold_m1_feat = new JTextField("Limite para métrica 1");
-				final JTextField threshold_m2_feat = new JTextField("Limite para métrica 2");
+				final JLabel metrica1_feat = new JLabel("ATFD: "); // POR METRICA AQUI
+				final JLabel metrica2_feat = new JLabel("LAA: "); // POR METRICA AQUI
+				final JTextField threshold_m1_feat = new JTextField("Limite para ATFD");
+				final JTextField threshold_m2_feat = new JTextField("Limite para LAA");
 
 				// adicionar a thresholds_long
 				thresholds_feat.add(labels_need.get(1));
@@ -312,7 +311,7 @@ public class Proj_Frame {
 				// reage conforme querer ou não
 				isAdvanced.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (!proc_avancada) {
+						if (!proc_avancada && isAdvanced.isSelected()) {
 							alterar.setVisible(true);
 							proc_avancada = true;
 						} else if (proc_avancada) {
@@ -433,7 +432,7 @@ public class Proj_Frame {
 				finish.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ArrayList<Boolean> list = new ArrayList<Boolean>();	
-						if(isAdvanced.isEnabled()) {
+						if(isAdvanced.isSelected()) {
 							String s_M1 = (String) ((JComboBox<String>)alterar.getComponent(0)).getSelectedItem();
 							System.out.println(s_M1);
 							String s_M2 = (String) ((JComboBox<String>)alterar.getComponent(1)).getSelectedItem();
@@ -445,8 +444,9 @@ public class Proj_Frame {
 							}
 							else if(ope.equals("OU")) {
 								ope = "OR";
+								
 							}
-							if(long_meth.isEnabled()) {
+							if(long_meth.isSelected()) {
 								String Simbolo_1 = (String) combos.get(0).getSelectedItem();
 								System.out.println(Simbolo_1);
 								String Simbolo_2 = (String) combos.get(1).getSelectedItem();
@@ -458,12 +458,9 @@ public class Proj_Frame {
 								double m1 = Double.parseDouble(limite_m1);
 								double m2 = Double.parseDouble(limite_m2);
 								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
-								System.out.println("lista = " + list);
-								
-								
-								
+								System.out.println("lista = " + list);	
 							}
-							else if(feature_envy.isEnabled()) {
+							else if(feature_envy.isSelected()) {
 								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
 								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
 								String limite_m1 = threshold_m1_feat.getText();
@@ -471,9 +468,10 @@ public class Proj_Frame {
 								double m1 = Double.parseDouble(limite_m1);
 								double m2 = Double.parseDouble(limite_m2);
 								list =Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
+								System.out.println("list + " +list);
 							}
 						}
-							else if(!isAdvanced.isEnabled() && long_meth.isEnabled()){
+							else if(!isAdvanced.isSelected() && long_meth.isSelected()){
 						
 						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
 						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
@@ -481,11 +479,7 @@ public class Proj_Frame {
 						String limite_loc = threshold_m2_long.getText();
 						double cyclo = Double.parseDouble(limite_cyclo);
 						double loc = Double.parseDouble(limite_loc);
-						// System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 +
-						// " cyclo = " + limite_cyclo + " loc = " + limite_loc);
-						// System.out.println(loc + " " + cyclo);
-						list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
-								cyclo, Simbolo_2, loc);
+						list = Avaliacao_Ferramentas.normal_search("long", Simbolo_1, cyclo, Simbolo_2,loc);
 						System.out.println(list);
 						int dci = Avaliacao_Ferramentas.customized_dci(list);
 						int dii = Avaliacao_Ferramentas.customized_dii(list);
@@ -493,6 +487,20 @@ public class Proj_Frame {
 						int adii = Avaliacao_Ferramentas.customized_adii(list);
 						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
 						aux.dispose();
+							}
+							else if(!isAdvanced.isSelected() && feature_envy.isSelected()){
+								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
+								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
+								String limite_atfd = threshold_m1_feat.getText();
+								String limite_laa = threshold_m2_feat.getText();
+								double atfd = Double.parseDouble(limite_atfd);
+								double laa = Double.parseDouble(limite_laa);
+								list = Avaliacao_Ferramentas.normal_search("envy", Simbolo_1, atfd, Simbolo_2, laa);
+								
+								
+								
+								
+								
 							}
 					
 					}
