@@ -17,16 +17,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-public class Proj_Frame {
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.stage.Stage;
+
+
+public class Proj_Frame{
 
 	private JFrame frame;
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private boolean show = false;
+	public static Avaliacao_Ferramentas Avaliacao_Ferramentas= new Avaliacao_Ferramentas();
 
 	private boolean ativo_long = false;
 	private boolean ativo_feat = false;
@@ -120,19 +132,47 @@ public class Proj_Frame {
 					// devolver gráfico
 					System.out.println("Teste Gráfico");
 				}
-
+				
 				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
+
 					// devolver pie chart
 					
 					System.out.println("Teste Pie Chart");
+
+					System.out.println("A imprimir PieChart");
+					//ALERT: Only called once!
+					PieChartGraph p = new PieChartGraph();		
+					p.display(null);
+
 				}
 
 				else {
 					// devolver tabela
 					// opcional: mudar else para else if com condição "igual" às anteriores
-					System.out.println("Teste Tabela");
+					
+					Table table = new Table();
+					table.criarJanela();
+					
+					/*
+					
+					JFrame aux= new JFrame();
+					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+					aux.setLocation(dimension.width / 2 - (220 / 2), dimension.height / 2 - (250 / 2));
+					//aux.setLayout(new BorderLayout());
+				//	JPanel p = new JPanel(new BorderLayout());
+					String data[][] = {{"PMD","140","18","261","0"},
+							{"iPlasma","140","0","279","0"}};
+					String column[] = {"Description","DCI","DII","ADCI","ADII"};
+					JTable tab= new JTable(data,column);
+					JScrollPane b= new  JScrollPane(tab);
+					aux.add(b);
+					aux.setVisible(true);
+					aux.pack();
+					*/
+					System.out.println(" imprimir tabele");
 				}
 			}
+			
 		});
 		auxiliar.pack();
 //		auxiliar.setSize(300, 300);
@@ -409,7 +449,7 @@ public class Proj_Frame {
 		up.add(activate, BorderLayout.SOUTH);
 	}
 
-	private void init() {
+	public void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
 		frame.setSize(400, 250);
@@ -420,5 +460,6 @@ public class Proj_Frame {
 	public static void main(String[] args) {
 		new Proj_Frame();
 	}
+
 
 }
