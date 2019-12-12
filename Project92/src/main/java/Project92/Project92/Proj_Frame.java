@@ -152,6 +152,8 @@ public class Proj_Frame {
 
 				else {
 					// devolver tabela
+          Table table = new Table();
+					table.criarJanela();
 					// opcional: mudar else para else if com condição "igual" às anteriores
 					System.out.println("Teste Tabela");
 				}
