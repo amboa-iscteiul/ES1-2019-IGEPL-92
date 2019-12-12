@@ -110,12 +110,14 @@ public class Avaliacao_Ferramentas {
 	
 	
 	
-	public static ArrayList<Boolean> normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
+	public static ArrayList<Boolean> normal_search(String Met,String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc,String s_atfd,double threshold_atfd,String s_laa,double threshold_laa) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
+		
+		
+		if(Met.equals("long")) {
 		double CYCLO;
-		double LOC;
-			 
+		double LOC; 
 			 if(s_cyclo.equals(s_loc) && s_cyclo.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
@@ -171,13 +173,99 @@ public class Avaliacao_Ferramentas {
 				 } 
 				 }
 			 }
+		}
+//----------------------------------------------------------------------------------------------------------------------
+		else if(Met.equals("envy")) {
+			double ATFD;
+			double LAA; 
+			
+			if(s_atfd.equals(s_laa) && s_cyclo.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD < threshold_cyclo && LAA < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			if(s_atfd.equals(s_loc) && s_laa.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD > threshold_cyclo && LAA > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			if(s_atfd.equals(">") && s_laa.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD > threshold_cyclo && LAA < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			
+			if(s_atfd.equals("<") && s_laa.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD < threshold_cyclo && LAA > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			
+			
+		}
 		
 		//System.out.println(list);
 			 return list;
 	}
 	
 	@SuppressWarnings("static-access")
-	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
+	public static ArrayList<Boolean> Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
 		int x=0;//numero da cell da metrica 1 escolhida
 		int y=0;//numero da cell da metrica 2 escolhida
 		int maxRows = excel_sheet.getLastRowNum();
@@ -421,7 +509,8 @@ public class Avaliacao_Ferramentas {
 			}//fim de oitava hipotese OR e >,<
 		
 		}//FIM DO OR
-		System.out.println(list);
+		//System.out.println(list);
+		return list;
 }
 	
 
