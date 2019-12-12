@@ -103,7 +103,6 @@ public class Proj_Frame {
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
-		// começar ação correspondente ao botão
 		grafico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Proj_Frame.escolherTipoGrafico();
@@ -312,7 +311,7 @@ public class Proj_Frame {
 				// reage conforme querer ou não
 				isAdvanced.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (!proc_avancada) {
+						if (!proc_avancada && isAdvanced.isSelected()) {
 							alterar.setVisible(true);
 							proc_avancada = true;
 						} else if (proc_avancada) {
