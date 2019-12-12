@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 public class Proj_Frame {
 
@@ -72,6 +75,7 @@ public class Proj_Frame {
 
 		// botoes e suas funções do painel down presente no south
 		procura(down);
+		importarExcel(down);
 
 		// adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
@@ -438,8 +442,32 @@ public class Proj_Frame {
 
 	}
 
-	private void importarExcel() { // PAULO
+	//ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO IMPORT
+	private void importarExcel(JPanel down) { //PAULO
+		JButton import_excel = new JButton("Importar Excel");
+		down.add(import_excel);
+		import_excel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				//Criar Janela para escolher o ficheiro excel
+				JFrame imp = new JFrame("Seleciona o ficheiro Excel a importar");
+				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+				imp.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
+				imp.setVisible(true);
+				imp.setLayout(new BorderLayout());
+
+				//Criar os instrumentos para selecionar o ficheiro excel pretendido
+				JFileChooser importa = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+				importa.setDialogTitle("Seleciona o ficheiro Excel a importar: ");
+				importa.setAcceptAllFileFilterUsed(false);
+				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", ".xls", ".xlsx");
+				importa.addChoosableFileFilter(opcao);
+
+				imp.add(importa,BorderLayout.CENTER);
+				imp.pack();
+
+			}
+		});
 	}
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {
