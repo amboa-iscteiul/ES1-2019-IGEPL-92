@@ -35,7 +35,7 @@ public class Avaliacao_Ferramentas {
 		}
 	}
 
-	public static int dci(String ferramenta,String met) {
+	public static int dci(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
 		boolean aux;
