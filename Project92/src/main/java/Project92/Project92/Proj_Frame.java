@@ -432,13 +432,49 @@ public class Proj_Frame {
 				// DII, ETC. DA REGRA IMPLEMENTADA
 				finish.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						ArrayList<Boolean> list = new ArrayList<Boolean>();	
 						if(isAdvanced.isEnabled()) {
 							String s_M1 = (String) ((JComboBox<String>)alterar.getComponent(0)).getSelectedItem();
+							System.out.println(s_M1);
 							String s_M2 = (String) ((JComboBox<String>)alterar.getComponent(1)).getSelectedItem();
-							
-							
-							
+							System.out.println(s_M2);
+							String ope = (String) ((JComboBox<String>)alterar.getComponent(2)).getSelectedItem();
+							System.out.println(ope);
+							if(ope.equals("E")) {
+								ope = "AND";
+							}
+							else if(ope.equals("OU")) {
+								ope = "OR";
+							}
+							if(long_meth.isEnabled()) {
+								String Simbolo_1 = (String) combos.get(0).getSelectedItem();
+								System.out.println(Simbolo_1);
+								String Simbolo_2 = (String) combos.get(1).getSelectedItem();
+								System.out.println(Simbolo_2);
+								String limite_m1 = threshold_m1_long.getText();
+								System.out.println(limite_m1);
+								String limite_m2 = threshold_m2_long.getText();
+								System.out.println(limite_m2);
+								double m1 = Double.parseDouble(limite_m1);
+								double m2 = Double.parseDouble(limite_m2);
+								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
+								System.out.println("lista = " + list);
+								
+								
+								
+							}
+							else if(feature_envy.isEnabled()) {
+								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
+								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
+								String limite_m1 = threshold_m1_feat.getText();
+								String limite_m2 = threshold_m2_feat.getText();
+								double m1 = Double.parseDouble(limite_m1);
+								double m2 = Double.parseDouble(limite_m2);
+								list =Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
+							}
 						}
+							else if(!isAdvanced.isEnabled() && long_meth.isEnabled()){
+						
 						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
 						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
 						String limite_cyclo = threshold_m1_long.getText();
@@ -448,7 +484,7 @@ public class Proj_Frame {
 						// System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 +
 						// " cyclo = " + limite_cyclo + " loc = " + limite_loc);
 						// System.out.println(loc + " " + cyclo);
-						ArrayList<Boolean> list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
+						list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
 								cyclo, Simbolo_2, loc);
 						System.out.println(list);
 						int dci = Avaliacao_Ferramentas.customized_dci(list);
@@ -457,6 +493,8 @@ public class Proj_Frame {
 						int adii = Avaliacao_Ferramentas.customized_adii(list);
 						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
 						aux.dispose();
+							}
+					
 					}
 				});
 

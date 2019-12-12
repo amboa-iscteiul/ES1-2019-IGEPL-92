@@ -177,7 +177,7 @@ public class Avaliacao_Ferramentas {
 	}
 	
 	@SuppressWarnings("static-access")
-	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
+	public static ArrayList<Boolean> Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
 		int x=0;//numero da cell da metrica 1 escolhida
 		int y=0;//numero da cell da metrica 2 escolhida
 		int maxRows = excel_sheet.getLastRowNum();
@@ -421,7 +421,8 @@ public class Avaliacao_Ferramentas {
 			}//fim de oitava hipotese OR e >,<
 		
 		}//FIM DO OR
-		System.out.println(list);
+		//System.out.println(list);
+		return list;
 }
 	
 
