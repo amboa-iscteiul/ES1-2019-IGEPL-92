@@ -561,7 +561,19 @@ public class Proj_Frame {
 				importa.setAcceptAllFileFilterUsed(false);
 				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", "xls", "xlsx");
 				importa.addChoosableFileFilter(opcao);
-
+				int result = importa.showOpenDialog(importa);
+				if(result == JFileChooser.CANCEL_OPTION) {
+					imp.dispose();
+					
+				}else {
+					if(result == JFileChooser.APPROVE_OPTION) {
+						File f = importa.getSelectedFile();
+						System.out.println("Abriu" + importa.getSelectedFile().getName());
+					}
+				}
+				
+				
+				
 				imp.add(importa, BorderLayout.CENTER);
 				imp.pack();
 
