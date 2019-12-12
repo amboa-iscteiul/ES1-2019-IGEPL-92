@@ -151,7 +151,7 @@ public class Proj_Frame {
 
 				else {
 					// devolver tabela
-          Table table = new Table();
+					Table table = new Table();
 					table.criarJanela();
 					// opcional: mudar else para else if com condição "igual" às anteriores
 					System.out.println("Teste Tabela");
@@ -559,7 +559,7 @@ public class Proj_Frame {
 				JFileChooser importa = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				importa.setDialogTitle("Seleciona o ficheiro Excel a importar: ");
 				importa.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", ".xls", ".xlsx");
+				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", "xls", "xlsx");
 				importa.addChoosableFileFilter(opcao);
 
 				imp.add(importa, BorderLayout.CENTER);

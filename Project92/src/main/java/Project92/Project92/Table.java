@@ -24,7 +24,7 @@ public class Table {
 
 
 	public void criarJanela() {
-	JFrame aux= new JFrame();
+	JFrame aux= new JFrame("Tabela");
 	Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 	aux.setLocation(dimension.width / 2 - (220 / 2), dimension.height / 2 - (250 / 2));
 	aux.setLayout(new BorderLayout());
