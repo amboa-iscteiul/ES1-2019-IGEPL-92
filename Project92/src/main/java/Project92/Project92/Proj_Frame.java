@@ -24,7 +24,12 @@ import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import org.apache.commons.math3.random.ISAACRandom;
+/**
+ * 
+ * @author ES1-2019-IGEPL-92
+ *
+ */
+
 
 public class Proj_Frame {
 
@@ -38,6 +43,10 @@ public class Proj_Frame {
 	private boolean proc_avancada = false;
 
 	private String operador_logico = "E";
+	
+	/**
+	 * Class constructor
+	 */
 
 	public Proj_Frame() {
 		frame = new JFrame("projeto");
@@ -47,6 +56,9 @@ public class Proj_Frame {
 		init();
 	}
 
+	/**
+	 * Method meant to add components to the main frame
+	 */
 	public void addFrameContent() {
 		frame.setLayout(new BorderLayout());
 
@@ -83,7 +95,11 @@ public class Proj_Frame {
 		frame.add(tools_pane, BorderLayout.CENTER);
 		frame.add(south, BorderLayout.SOUTH);
 	}
-
+	
+	/**
+	 * Method meant to initialize the button which will then create a type of graphic 
+	 * @param up panel where the button will be inserted
+	 */
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
@@ -94,6 +110,11 @@ public class Proj_Frame {
 			}
 		});
 	}
+	
+	/**
+	 * Method meant to choose a type of graphic between Pie Chart and Table to display
+	 * @see shows the selected graphic
+	 */
 
 	private static void escolherTipoGrafico() {
 		// configurações da frame onde utilizador escolhe o que será utilizado
@@ -108,7 +129,7 @@ public class Proj_Frame {
 		auxiliar.add(titulo);
 
 		// criar comboBox
-		String[] str = new String[] { "Gráfico", "Pie Chart", "Tabela" };
+		String[] str = new String[] { "Pie Chart", "Tabela" };
 		final JComboBox<String> escolhas = new JComboBox<String>(str);
 		escolhas.setPreferredSize(new Dimension(75, escolhas.getPreferredSize().height));
 		System.out.println(escolhas.isPreferredSizeSet());
@@ -122,12 +143,7 @@ public class Proj_Frame {
 		// tabela/pie/grafico
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (((String) escolhas.getSelectedItem()).equals("Gráfico")) {
-					// devolver gráfico
-					System.out.println("Teste Gráfico");
-				}
-
-				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
+				if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
 					System.out.println("A imprimir PieChart");
 					// ALERT: Only called once!
 					PieChartGraph p = new PieChartGraph();
@@ -146,6 +162,14 @@ public class Proj_Frame {
 
 	}
 
+	/**
+	 * Happens after clicking the "procura" button in the main frame
+	 * Method meant to add all necessary components for the search algorithm to work in the frame
+	 * Adds action listeners to the buttons so that the user can see the rule he is creating ("Pre-Visualização") and
+	 * save that same rule so it can be applied in the main frame
+	 * @param down panel where the button will be inserted
+	 * @see new aux frame with user's possible choices
+	 */
 	private void procura(JPanel down) {
 		JButton proc = new JButton("Procura");
 		down.add(proc);
@@ -170,7 +194,7 @@ public class Proj_Frame {
 
 				// geral para ambos os paineis
 				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
-				String[] v_sinais = new String[] { ">", "<" }; // RETIRAR SE NECESSÁRIO
+				String[] v_sinais = new String[] { ">", "<" }; 
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
 				ArrayList<JLabel> labels_need = new ArrayList<>();
@@ -296,7 +320,7 @@ public class Proj_Frame {
 					}
 				});
 				// Itens a aparecer quando é proc_avancada
-				procura_avançada(alterar);
+				procura_avancada(alterar);
 
 				// ações dos itens da procura avançada
 				// usar alterar.getComponent(int) -> 0- Metrica 1 | 1- Metrica 2 | 2- Operadores
@@ -445,7 +469,7 @@ public class Proj_Frame {
 		});
 	}
 
-	private void procura_avançada(JPanel alterar) {
+	private void procura_avancada(JPanel alterar) {
 		// JCombo para escolher entre as métricas
 		String[] s_metricas = new String[] { "Métrica nº1:", "CYCLO", "LAA", "ATFD", "LOC" };
 		JComboBox<String> metricas = new JComboBox<String>(s_metricas); // MÉTRICA 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
