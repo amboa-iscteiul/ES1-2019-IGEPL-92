@@ -166,9 +166,9 @@ public class Proj_Frame {
 				long_method.setLayout(new BorderLayout());
 				feature.setLayout(new BorderLayout());
 
-				// geral para ambosos paineis
+				// geral para ambos os paineis
 				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
-				String[] v_sinais = new String[] { ">", "<", ">=", "<=" }; // RETIRAR SE NECESSÁRIO
+				String[] v_sinais = new String[] { ">", "<" }; // RETIRAR SE NECESSÁRIO
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
 				ArrayList<JLabel> labels_need = new ArrayList<>();
@@ -179,10 +179,10 @@ public class Proj_Frame {
 				final JRadioButton long_meth = new JRadioButton("is_long_method");
 				final JPanel thresholds_long = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
-				final JLabel metrica1_long = new JLabel("POR METRICA: "); // POR METRICA AQUI
-				final JLabel metrica2_long = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				final JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
-				final JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
+				final JLabel metrica1_long = new JLabel("CYCLO: "); // POR METRICA AQUI
+				final JLabel metrica2_long = new JLabel("LOC: "); // POR METRICA AQUI
+				final JTextField threshold_m1_long = new JTextField("nº limite");
+				final JTextField threshold_m2_long = new JTextField("nº limite");
 
 				// adicionar a thresholds_long
 				thresholds_long.add(labels_need.get(0));
@@ -266,6 +266,30 @@ public class Proj_Frame {
 				JPanel botoes = new JPanel();
 				JButton pre_vis = new JButton("Pré-Visualizar");
 				JButton finish = new JButton("Ok");
+				// ADD DO ZÉ- AÇÃO DO OK- FAZER COM QUE ADICIONE NO PAINEL PRINCIPAL OS DCI,
+				// DII, ETC. DA REGRA IMPLEMENTADA
+				finish.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
+						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
+						String limite_cyclo = threshold_m1_long.getText();
+						String limite_loc = threshold_m2_long.getText();
+						double cyclo = Double.parseDouble(limite_cyclo);
+						double loc = Double.parseDouble(limite_loc);
+						// System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 +
+						// " cyclo = " + limite_cyclo + " loc = " + limite_loc);
+						// System.out.println(loc + " " + cyclo);
+						ArrayList<Boolean> list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
+								cyclo, Simbolo_2, loc);
+						System.out.println(list);
+						int dci = Avaliacao_Ferramentas.customized_dci(list);
+						int dii = Avaliacao_Ferramentas.customized_dii(list);
+						int adci = Avaliacao_Ferramentas.customized_adci(list);
+						int adii = Avaliacao_Ferramentas.customized_adii(list);
+						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
+						aux.dispose();
+					}
+				});
 
 				botoes.add(pre_vis);
 				botoes.add(finish);
@@ -442,28 +466,29 @@ public class Proj_Frame {
 
 	}
 
-	//ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO IMPORT
-	private void importarExcel(JPanel down) { //PAULO
+	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
+	// IMPORT
+	private void importarExcel(JPanel down) { // PAULO
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
 		import_excel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//Criar Janela para escolher o ficheiro excel
+				// Criar Janela para escolher o ficheiro excel
 				JFrame imp = new JFrame("Seleciona o ficheiro Excel a importar");
 				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 				imp.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 				imp.setVisible(true);
 				imp.setLayout(new BorderLayout());
 
-				//Criar os instrumentos para selecionar o ficheiro excel pretendido
+				// Criar os instrumentos para selecionar o ficheiro excel pretendido
 				JFileChooser importa = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				importa.setDialogTitle("Seleciona o ficheiro Excel a importar: ");
 				importa.setAcceptAllFileFilterUsed(false);
 				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", ".xls", ".xlsx");
 				importa.addChoosableFileFilter(opcao);
 
-				imp.add(importa,BorderLayout.CENTER);
+				imp.add(importa, BorderLayout.CENTER);
 				imp.pack();
 
 			}

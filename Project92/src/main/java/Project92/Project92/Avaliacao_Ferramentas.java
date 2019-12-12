@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -17,7 +18,7 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		Avaliacao_Ferramentas.dii("iPlasma");
 		//normal_search(">", 5, "<",10 );
-		Advance_search("ATFD", ">", 0, "LAA", ">", 0, "AND");
+		Advance_search("LAA", "<", 0.3, "LOC", "<", 10, "AND");
 	
 	}
 
@@ -109,7 +110,7 @@ public class Avaliacao_Ferramentas {
 	
 	
 	
-	public static void normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
+	public static ArrayList<Boolean> normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
 		double CYCLO;
@@ -141,6 +142,7 @@ public class Avaliacao_Ferramentas {
 					 list.add(false);
 				 }
 			 }
+				
 			 }
 			 
 			 else if(s_cyclo.equals(">") && s_loc.equals("<")) {
@@ -171,8 +173,10 @@ public class Avaliacao_Ferramentas {
 			 }
 		
 		//System.out.println(list);
+			 return list;
 	}
 	
+	@SuppressWarnings("static-access")
 	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
 		int x=0;//numero da cell da metrica 1 escolhida
 		int y=0;//numero da cell da metrica 2 escolhida
@@ -182,11 +186,11 @@ public class Avaliacao_Ferramentas {
 		//ter o numero da cell
 		for (int i = 4; i <= 7; i++) {
 			if(excel_sheet.getRow(0).getCell(i).getStringCellValue().equals(Metrica_1)) {
-				x=i-1;
+				x=i;
 				System.out.println(excel_sheet.getRow(0).getCell(i).getStringCellValue() + " = " +"Metrica 1 = " +Metrica_1 + " " + "com cell a " +"x = " + x);
 }
 			if(excel_sheet.getRow(0).getCell(i).getStringCellValue().equals(Metrica_2)) {
-				y=i-1;
+				y=i;
 				System.out.println(excel_sheet.getRow(0).getCell(i).getStringCellValue() + " = " + "Metrica 2 = " +Metrica_2 + " " + "com cell a " + "y = " +y);
 			}
 		}//fim do for++
@@ -196,8 +200,23 @@ public class Avaliacao_Ferramentas {
 			//inicio de primeira hipotese, AND e <
 			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 < threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -208,8 +227,23 @@ public class Avaliacao_Ferramentas {
 			//inicio de segunda hipotese, AND e >
 			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 > threshold_Metrica_1 && value_M2 > threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -222,8 +256,23 @@ public class Avaliacao_Ferramentas {
 		//inicio de terceira hipotese AND e <,>	
 			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 < threshold_Metrica_1 && value_M2 > threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -234,8 +283,23 @@ public class Avaliacao_Ferramentas {
 		//inicio de quarta hipotese AND e >,<	
 			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 > threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -249,8 +313,23 @@ public class Avaliacao_Ferramentas {
 			//inicio da quinta hipotese OR e <
 			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 < threshold_Metrica_1 || value_M2 < threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -261,8 +340,23 @@ public class Avaliacao_Ferramentas {
 			//inicio de sexta hipotese, OR e >
 			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 > threshold_Metrica_1 || value_M2 > threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -275,8 +369,23 @@ public class Avaliacao_Ferramentas {
 			//inicio de sétima hipotese OR e <,>	
 			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 < threshold_Metrica_1 || value_M2 > threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -287,8 +396,23 @@ public class Avaliacao_Ferramentas {
 			//inicio de oitava hipotese OR e >,<	
 			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
-					double value_M1=excel_sheet.getRow(i).getCell(x).getNumericCellValue();
-					double value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+					double value_M1=0;
+					double value_M2=0;
+					if(excel_sheet.getRow(i).getCell(x).getCellType().equals(excel_sheet.getRow(i).getCell(x).getCellType().STRING)) {
+						 value_M1 = Double.parseDouble(excel_sheet.getRow(i).getCell(x).getStringCellValue());
+						 System.out.println("value_M2 = " + value_M1);
+					}
+					else {
+						value_M1 = excel_sheet.getRow(i).getCell(x).getNumericCellValue();
+					}
+					if(excel_sheet.getRow(i).getCell(y).getCellType().equals(excel_sheet.getRow(i).getCell(y).getCellType().STRING)) {
+						value_M2 = Double.parseDouble(excel_sheet.getRow(i).getCell(y).getStringCellValue());
+						System.out.println("value_M2 = " +value_M2);
+					}
+					else {
+						value_M2= excel_sheet.getRow(i).getCell(y).getNumericCellValue();
+						
+					}
 					if(value_M1 > threshold_Metrica_1 && value_M2 < threshold_Metrica_2) {
 						list.add(true);
 					}else {list.add(false);}
@@ -297,7 +421,7 @@ public class Avaliacao_Ferramentas {
 			}//fim de oitava hipotese OR e >,<
 		
 		}//FIM DO OR
-		//System.out.println(list);
+		System.out.println(list);
 }
 	
 
