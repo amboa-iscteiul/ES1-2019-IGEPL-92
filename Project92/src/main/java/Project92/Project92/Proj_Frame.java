@@ -103,7 +103,6 @@ public class Proj_Frame {
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
-		// começar ação correspondente ao botão
 		grafico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Proj_Frame.escolherTipoGrafico();
