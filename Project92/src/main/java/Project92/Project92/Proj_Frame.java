@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -88,8 +90,14 @@ public class Proj_Frame {
 		criarGrafico(up);// por fazer
 
 		// botoes e suas funções do painel down presente no south
+//<<<<<<< HEAD
 		procura(down);
 		importarExcel(down);
+//=======
+		/**importarExcel(down);
+		procura_simples(down);
+		procura_avançada();
+>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae**/
 
 		// adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
@@ -138,24 +146,44 @@ public class Proj_Frame {
 		// criar botão para escolher o tipo de gráfico
 		JButton ok = new JButton("Ok");
 		auxiliar.add(ok);
+				//PieChartGraph graf = new PieChartGraph();
 
 		// carregar em "ok" para ler o que foi selecionado na comboBox e devolver
 		// tabela/pie/grafico
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+/**<<<<<<< HEAD
 				if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
+=======**/
+				if (((String) escolhas.getSelectedItem()).equals("Gráfico")) {
+					// devolver gráfico
+					System.out.println("Teste Gráfico");
+				}
+				
+				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
+
+					// devolver pie chart
+					
+					System.out.println("Teste Pie Chart");
+
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 					System.out.println("A imprimir PieChart");
 					// ALERT: Only called once!
 					PieChartGraph p = new PieChartGraph();
 					p.display(null);
+
 				}
 
 				else {
 					// devolver tabela
-					// opcional: mudar else para else if com condição "igual" às anteriores
-					System.out.println("Teste Tabela");
+					
+					Table table = new Table();
+					table.criarJanela();
+				
+					System.out.println(" imprimir tabele");
 				}
 			}
+			
 		});
 		auxiliar.pack();
 //		auxiliar.setSize(300, 300);
@@ -192,12 +220,18 @@ public class Proj_Frame {
 				long_method.setLayout(new BorderLayout());
 				feature.setLayout(new BorderLayout());
 
+/**<<<<<<< HEAD
 				// geral para ambos os paineis
 				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
 				String[] v_sinais = new String[] { ">", "<" }; 
+=======**/
+				// geral para ambosos paineis
+				final ArrayList<JComboBox<String>> combos = new ArrayList<JComboBox<String>>();
+				String[] v_sinais = new String[] { ">", "<", ">=", "<=" }; // RETIRAR SE NECESSÁRIO
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
-				ArrayList<JLabel> labels_need = new ArrayList<>();
+				ArrayList<JLabel> labels_need = new ArrayList<JLabel>();
 				for (int i = 0; i < 2; i++)
 					labels_need.add(new JLabel("Thresholds e Sinais:"));
 
@@ -500,22 +534,33 @@ public class Proj_Frame {
 		});
 
 	}
+/**<<<<<<< HEAD
 
 	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
 	// IMPORT
 	private void importarExcel(JPanel down) { // PAULO
+=======**/
+	
+	private void importarExcel(JPanel down) { //PAULO
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
 		import_excel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+/**<<<<<<< HEAD
 
 				// Criar Janela para escolher o ficheiro excel
+=======**/
+				
+				//Criar Janela para escolher o ficheiro excel
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 				JFrame imp = new JFrame("Seleciona o ficheiro Excel a importar");
 				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 				imp.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 				imp.setVisible(true);
 				imp.setLayout(new BorderLayout());
 
+/**<<<<<<< HEAD
 				// Criar os instrumentos para selecionar o ficheiro excel pretendido
 				JFileChooser importa = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				importa.setDialogTitle("Seleciona o ficheiro Excel a importar: ");
@@ -528,6 +573,21 @@ public class Proj_Frame {
 
 			}
 		});
+=======**/
+				//Criar os instrumentos para selecionar o ficheiro excel pretendido
+				JFileChooser importa = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+				importa.setDialogTitle("Seleciona o ficheiro Excel a importar: ");
+				importa.setAcceptAllFileFilterUsed(false);
+				FileNameExtensionFilter opcao = new FileNameExtensionFilter("Excel file", "xls", "xlsx");
+				importa.addChoosableFileFilter(opcao);
+				
+				imp.add(importa,BorderLayout.CENTER);
+				imp.pack();
+							
+			}
+		});;
+		
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 	}
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {

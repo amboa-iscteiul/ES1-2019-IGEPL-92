@@ -481,5 +481,23 @@ public class Avaliacao_Ferramentas {
 		System.out.println("ADII da ferramenta " + ferramenta + " é igual a: " + adii);
 		return adii;
 	}
+/**<<<<<<< HEAD
+=======**/
+	
+	public ArrayList<Integer>getListOfAllValues(){
+		ArrayList<Integer>listOfValues = new ArrayList();
+		listOfValues.add(Avaliacao_Ferramentas.dci("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.dci("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.dii("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.dii("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.adci("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.adci("iPlasma"));
+		listOfValues.add(Avaliacao_Ferramentas.adii("PMD"));
+		listOfValues.add(Avaliacao_Ferramentas.adii("iPlasma"));
+		return listOfValues;
+	}
+	
+	
+//>>>>>>> b07b1336661cd8034b1004f3d5e972ed2f5b3cae
 
 }
