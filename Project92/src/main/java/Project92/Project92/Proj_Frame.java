@@ -11,24 +11,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-
-public class Proj_Frame{
+public class Proj_Frame {
 
 	private JFrame frame;
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private boolean show = false;
-	public static Avaliacao_Ferramentas Avaliacao_Ferramentas= new Avaliacao_Ferramentas();
 
 	private boolean ativo_long = false;
 	private boolean ativo_feat = false;
+
+	private boolean proc_avancada = false;
+
+	private String operador_logico = "E";
 
 	public Proj_Frame() {
 		frame = new JFrame("projeto");
@@ -67,8 +71,7 @@ public class Proj_Frame{
 		criarGrafico(up);// por fazer
 
 		// botoes e suas funções do painel down presente no south
-		procura_simples(down);
-		procura_avançada();
+		procura(down);
 
 		// adicionar à frame!!!!!!
 		frame.add(tools_pane, BorderLayout.CENTER);
@@ -117,11 +120,11 @@ public class Proj_Frame{
 					// devolver gráfico
 					System.out.println("Teste Gráfico");
 				}
-				
+
 				else if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
 					System.out.println("A imprimir PieChart");
-					//ALERT: Only called once!
-					PieChartGraph p = new PieChartGraph();		
+					// ALERT: Only called once!
+					PieChartGraph p = new PieChartGraph();
 					p.display(null);
 				}
 
@@ -137,18 +140,19 @@ public class Proj_Frame{
 
 	}
 
-	private void procura_simples(JPanel down) {
-		JButton proc = new JButton("Procura Simples");
+	private void procura(JPanel down) {
+		JButton proc = new JButton("Procura");
 		down.add(proc);
 		proc.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				// ComboBox para símbolos (< ou >) e caixa de texto para inserir thresholds
-				JFrame aux = new JFrame("Procura Simples");
+				final JFrame aux = new JFrame("Procura Simples");
 				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 				aux.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 				aux.setVisible(true);
 				aux.setLayout(new BorderLayout());
-				JPanel geral = new JPanel(new GridLayout(2, 1));
+				JPanel geral = new JPanel(new GridLayout(3, 1));
 
 				// is_long_method ou feature_envy
 				JPanel long_method = new JPanel();
@@ -159,7 +163,7 @@ public class Proj_Frame{
 				feature.setLayout(new BorderLayout());
 
 				// geral para ambosos paineis
-				ArrayList<JComboBox<String>> combos = new ArrayList<>();
+				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
 				String[] v_sinais = new String[] { ">", "<", ">=", "<=" }; // RETIRAR SE NECESSÁRIO
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
@@ -171,10 +175,10 @@ public class Proj_Frame{
 				final JRadioButton long_meth = new JRadioButton("is_long_method");
 				final JPanel thresholds_long = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
-				JLabel metrica1_long = new JLabel("POR METRICA: "); // POR METRICA AQUI
-				JLabel metrica2_long = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
-				JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
+				final JLabel metrica1_long = new JLabel("POR METRICA: "); // POR METRICA AQUI
+				final JLabel metrica2_long = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				final JTextField threshold_m1_long = new JTextField("Limite para métrica 1");
+				final JTextField threshold_m2_long = new JTextField("Limite para métrica 2");
 
 				// adicionar a thresholds_long
 				thresholds_long.add(labels_need.get(0));
@@ -196,10 +200,10 @@ public class Proj_Frame{
 				final JRadioButton feature_envy = new JRadioButton("feature_envy");
 				final JPanel thresholds_feat = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais_feat = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
-				JLabel metrica1_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				JLabel metrica2_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
-				JTextField threshold_m1_feat = new JTextField("Limite para métrica 1");
-				JTextField threshold_m2_feat = new JTextField("Limite para métrica 2");
+				final JLabel metrica1_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				final JLabel metrica2_feat = new JLabel("POR METRICA AQUI: "); // POR METRICA AQUI
+				final JTextField threshold_m1_feat = new JTextField("Limite para métrica 1");
+				final JTextField threshold_m2_feat = new JTextField("Limite para métrica 2");
 
 				// adicionar a thresholds_long
 				thresholds_feat.add(labels_need.get(1));
@@ -227,6 +231,7 @@ public class Proj_Frame{
 				long_meth.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (long_meth.isSelected() && !ativo_long) {
+//							feature_envy.setSelected(false); //fazer se tiver tempo
 							feature_envy.setEnabled(false);
 							limites_sinais.setVisible(true);
 							ativo_long = true;
@@ -242,6 +247,7 @@ public class Proj_Frame{
 				feature_envy.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (feature_envy.isSelected() && !ativo_feat) {
+//							long_meth.setSelected(false); //fazer se tiver tempo
 							long_meth.setEnabled(false);
 							limites_sinais_feat.setVisible(true);
 							ativo_feat = true;
@@ -252,27 +258,169 @@ public class Proj_Frame{
 						}
 					}
 				});
-				//fazer e adicionar botões
+				// fazer e adicionar botões
 				JPanel botoes = new JPanel();
 				JButton pre_vis = new JButton("Pré-Visualizar");
 				JButton finish = new JButton("Ok");
 
 				botoes.add(pre_vis);
 				botoes.add(finish);
-				
+
 				// adicionar ao painel geral e à frame
 				geral.add(long_method);
 				geral.add(feature);
 				aux.add(geral, BorderLayout.CENTER);
 				aux.add(botoes, BorderLayout.SOUTH);
 
+				// procura avançada!!!!!
+				final JPanel avancada = new JPanel(new BorderLayout());
+				final JPanel alterar = new JPanel();
+				alterar.setVisible(false);
+				final JCheckBox isAdvanced = new JCheckBox("Procura Avançada");
+				// reage conforme querer ou não
+				isAdvanced.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (!proc_avancada) {
+							alterar.setVisible(true);
+							proc_avancada = true;
+						} else if (proc_avancada) {
+							alterar.setVisible(false);
+							proc_avancada = false;
+						}
+					}
+				});
+				// Itens a aparecer quando é proc_avancada
+				procura_avançada(alterar);
+
+				// ações dos itens da procura avançada
+				// usar alterar.getComponent(int) -> 0- Metrica 1 | 1- Metrica 2 | 2- Operadores
+				// lógicos
+
+				// alterar a métrica 1 consoante a função ativa (long_method ou feature_envy)
+				((JComboBox<String>) alterar.getComponent(0)).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						switch (((String) ((JComboBox<String>) alterar.getComponent(0)).getSelectedItem())) {
+						case "CYCLO":
+							if (long_meth.isSelected())
+								metrica1_long.setText("CYCLO");
+							else if (feature_envy.isSelected())
+								metrica1_feat.setText("CYCLO");
+							break;
+						case "LAA":
+							if (long_meth.isSelected())
+								metrica1_long.setText("LAA");
+							else if (feature_envy.isSelected())
+								metrica1_feat.setText("LAA");
+							break;
+						case "ATFD":
+							if (long_meth.isSelected())
+								metrica1_long.setText("ATFD");
+							else if (feature_envy.isSelected())
+								metrica1_feat.setText("ATFD");
+							break;
+						case "LOC":
+							if (long_meth.isSelected())
+								metrica1_long.setText("LOC");
+							else if (feature_envy.isSelected())
+								metrica1_feat.setText("LOC");
+							break;
+						}
+					}
+				});
+
+				// alterar métrica 2 consoante a função ativa
+				((JComboBox<String>) alterar.getComponent(1)).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						switch (((String) ((JComboBox<String>) alterar.getComponent(1)).getSelectedItem())) {
+						case "CYCLO":
+							if (long_meth.isSelected())
+								metrica2_long.setText("CYCLO");
+							else if (feature_envy.isSelected())
+								metrica2_feat.setText("CYCLO");
+							break;
+						case "LAA":
+							if (long_meth.isSelected())
+								metrica2_long.setText("LAA");
+							else if (feature_envy.isSelected())
+								metrica2_feat.setText("LAA");
+							break;
+						case "ATFD":
+							if (long_meth.isSelected())
+								metrica2_long.setText("ATFD");
+							else if (feature_envy.isSelected())
+								metrica2_feat.setText("ATFD");
+							break;
+						case "LOC":
+							if (long_meth.isSelected())
+								metrica2_long.setText("LOC");
+							else if (feature_envy.isSelected())
+								metrica2_feat.setText("LOC");
+							break;
+						}
+					}
+				});
+
+				// alterar operador lógico
+				((JComboBox<String>) alterar.getComponent(2)).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						switch (((String) ((JComboBox<String>) alterar.getComponent(2)).getSelectedItem())) {
+						case "E":
+							operador_logico = "E";
+							break;
+						case "OU":
+							operador_logico = "OU";
+							break;
+						default:
+							operador_logico = "E";
+						}
+					}
+				});
+
+				pre_vis.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String visualizar;
+						if (long_meth.isSelected())
+							visualizar = ("is_long_method: " + "(" + metrica1_long.getText() + " "
+									+ ((String) (combos.get(0)).getSelectedItem()) + " " + threshold_m1_long.getText()
+									+ " " + operador_logico + " " + metrica2_long.getText() + " "
+									+ ((String) (combos.get(1)).getSelectedItem()) + " " + threshold_m2_long.getText()
+									+ ")");
+						else
+							visualizar = ("feature_envy: " + "(" + metrica1_feat.getText() + " "
+									+ ((String) (combos.get(2)).getSelectedItem()) + " " + threshold_m1_feat.getText()
+									+ " " + operador_logico + " " + metrica2_feat.getText() + " "
+									+ ((String) (combos.get(3)).getSelectedItem()) + " " + threshold_m2_feat.getText()
+									+ ")");
+
+						JOptionPane.showMessageDialog(aux, visualizar);
+					}
+				});
+
+				// adicionar CheckBox à frame
+				avancada.add(isAdvanced, BorderLayout.NORTH);
+				avancada.add(alterar, BorderLayout.CENTER);
+				geral.add(avancada);
+
 				aux.pack();
 			}
 		});
 	}
 
-	private void procura_avançada() {
-		
+	private void procura_avançada(JPanel alterar) {
+		// JCombo para escolher entre as métricas
+		String[] s_metricas = new String[] { "Métrica nº1:", "CYCLO", "LAA", "ATFD", "LOC" };
+		JComboBox<String> metricas = new JComboBox<String>(s_metricas); // MÉTRICA 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		String[] s_metricas2 = new String[] { "Métrica nº2:", "CYCLO", "LAA", "ATFD", "LOC" };
+		JComboBox<String> metricas2 = new JComboBox<String>(s_metricas2); // MÉTRICA 2!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+		// JCombo para operadores lógicos (E/OU)
+		String[] s_operadores = new String[] { "Operador:", "E", "OU" };
+		JComboBox<String> operadores = new JComboBox<String>(s_operadores);
+
+		// adicionar itens à frame
+		alterar.add(metricas);
+		alterar.add(metricas2);
+		alterar.add(operadores);
 	}
 
 	private void abrirExcel(JPanel up) {
@@ -289,9 +437,9 @@ public class Proj_Frame{
 		});
 
 	}
-	
-	private void importarExcel() { //PAULO
-		
+
+	private void importarExcel() { // PAULO
+
 	}
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {
@@ -394,6 +542,5 @@ public class Proj_Frame{
 	public static void main(String[] args) {
 		new Proj_Frame();
 	}
-
 
 }
