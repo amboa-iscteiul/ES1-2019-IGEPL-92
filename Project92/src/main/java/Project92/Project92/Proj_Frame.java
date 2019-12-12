@@ -312,7 +312,7 @@ public class Proj_Frame {
 				// reage conforme querer ou não
 				isAdvanced.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (!proc_avancada) {
+						if (!proc_avancada && isAdvanced.isSelected()) {
 							alterar.setVisible(true);
 							proc_avancada = true;
 						} else if (proc_avancada) {
