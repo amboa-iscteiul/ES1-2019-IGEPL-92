@@ -24,12 +24,12 @@ import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-
 /**
  * 
  * @author ES1-2019-IGEPL-92
  *
  */
+
 
 public class Proj_Frame {
 
@@ -103,7 +103,6 @@ public class Proj_Frame {
 	private void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
-		// começar ação correspondente ao botão
 		grafico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Proj_Frame.escolherTipoGrafico();
@@ -152,6 +151,8 @@ public class Proj_Frame {
 
 				else {
 					// devolver tabela
+          Table table = new Table();
+					table.criarJanela();
 					// opcional: mudar else para else if com condição "igual" às anteriores
 					System.out.println("Teste Tabela");
 				}
@@ -292,31 +293,7 @@ public class Proj_Frame {
 				JPanel botoes = new JPanel();
 				JButton pre_vis = new JButton("Pré-Visualizar");
 				JButton finish = new JButton("Ok");
-				// ADD DO ZÉ- AÇÃO DO OK- FAZER COM QUE ADICIONE NO PAINEL PRINCIPAL OS DCI,
-				// DII, ETC. DA REGRA IMPLEMENTADA
-				finish.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
-						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
-						String limite_cyclo = threshold_m1_long.getText();
-						String limite_loc = threshold_m2_long.getText();
-						double cyclo = Double.parseDouble(limite_cyclo);
-						double loc = Double.parseDouble(limite_loc);
-						// System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 +
-						// " cyclo = " + limite_cyclo + " loc = " + limite_loc);
-						// System.out.println(loc + " " + cyclo);
-						ArrayList<Boolean> list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
-								cyclo, Simbolo_2, loc);
-						System.out.println(list);
-						int dci = Avaliacao_Ferramentas.customized_dci(list);
-						int dii = Avaliacao_Ferramentas.customized_dii(list);
-						int adci = Avaliacao_Ferramentas.customized_adci(list);
-						int adii = Avaliacao_Ferramentas.customized_adii(list);
-						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
-						aux.dispose();
-					}
-				});
-
+				
 				botoes.add(pre_vis);
 				botoes.add(finish);
 
@@ -449,6 +426,39 @@ public class Proj_Frame {
 						JOptionPane.showMessageDialog(aux, visualizar);
 					}
 				});
+				
+				// ADD DO ZÉ- AÇÃO DO OK- FAZER COM QUE ADICIONE NO PAINEL PRINCIPAL OS DCI,
+				// DII, ETC. DA REGRA IMPLEMENTADA
+				finish.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(isAdvanced.isEnabled()) {
+							String s_M1 = (String) ((JComboBox<String>)alterar.getComponent(0)).getSelectedItem();
+							String s_M2 = (String) ((JComboBox<String>)alterar.getComponent(1)).getSelectedItem();
+							
+							
+							
+						}
+						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
+						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
+						String limite_cyclo = threshold_m1_long.getText();
+						String limite_loc = threshold_m2_long.getText();
+						double cyclo = Double.parseDouble(limite_cyclo);
+						double loc = Double.parseDouble(limite_loc);
+						// System.out.println("simbolo 1 = " + Simbolo_1 + " simbolo 2 = " + Simbolo_2 +
+						// " cyclo = " + limite_cyclo + " loc = " + limite_loc);
+						// System.out.println(loc + " " + cyclo);
+						ArrayList<Boolean> list = Project92.Project92.Avaliacao_Ferramentas.normal_search(Simbolo_1,
+								cyclo, Simbolo_2, loc);
+						System.out.println(list);
+						int dci = Avaliacao_Ferramentas.customized_dci(list);
+						int dii = Avaliacao_Ferramentas.customized_dii(list);
+						int adci = Avaliacao_Ferramentas.customized_adci(list);
+						int adii = Avaliacao_Ferramentas.customized_adii(list);
+						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
+						aux.dispose();
+					}
+				});
+
 
 				// adicionar CheckBox à frame
 				avancada.add(isAdvanced, BorderLayout.NORTH);
