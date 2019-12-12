@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -177,6 +176,7 @@ public class Avaliacao_Ferramentas {
 			 return list;
 	}
 	
+	@SuppressWarnings("static-access")
 	public static void Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
 		int x=0;//numero da cell da metrica 1 escolhida
 		int y=0;//numero da cell da metrica 2 escolhida
