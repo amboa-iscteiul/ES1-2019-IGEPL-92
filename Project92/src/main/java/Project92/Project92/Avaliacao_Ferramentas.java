@@ -110,12 +110,14 @@ public class Avaliacao_Ferramentas {
 	
 	
 	
-	public static ArrayList<Boolean> normal_search(String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc) {
+	public static ArrayList<Boolean> normal_search(String Met,String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc,String s_atfd,double threshold_atfd,String s_laa,double threshold_laa) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
+		
+		
+		if(Met.equals("long")) {
 		double CYCLO;
-		double LOC;
-			 
+		double LOC; 
 			 if(s_cyclo.equals(s_loc) && s_cyclo.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
@@ -171,6 +173,92 @@ public class Avaliacao_Ferramentas {
 				 } 
 				 }
 			 }
+		}
+//----------------------------------------------------------------------------------------------------------------------
+		else if(Met.equals("envy")) {
+			double ATFD;
+			double LAA; 
+			
+			if(s_atfd.equals(s_laa) && s_cyclo.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD < threshold_cyclo && LAA < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			if(s_atfd.equals(s_loc) && s_laa.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD > threshold_cyclo && LAA > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			if(s_atfd.equals(">") && s_laa.equals("<")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD > threshold_cyclo && LAA < threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			
+			if(s_atfd.equals("<") && s_laa.equals(">")) {
+				 for (int i = 1; i < maxRows; i++) {
+				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
+				 
+				 if(excel_sheet.getRow(i).getCell(7).getCellType().equals(excel_sheet.getRow(i).getCell(7).getCellType().STRING)) {
+					 LAA= Double.parseDouble(excel_sheet.getRow(i).getCell(7).getStringCellValue());
+				 }
+				 else {
+					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
+				 }
+				 if(ATFD < threshold_cyclo && LAA > threshold_loc) {
+					 list.add(true);
+				 }
+				 else {
+					 list.add(false);
+				 }
+				 }
+				 
+			 }
+			
+			
+		}
 		
 		//System.out.println(list);
 			 return list;
