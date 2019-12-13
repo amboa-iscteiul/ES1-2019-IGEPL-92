@@ -156,7 +156,7 @@ public class Proj_Frame {
 		auxiliar.add(titulo);
 
 		// criar comboBox
-		String[] str = new String[] { "Pie Chart", "Tabela" };
+		String[] str = new String[] { "Pie Chart", "Tabela", "Gráfico de barras" };
 		final JComboBox<String> escolhas = new JComboBox<String>(str);
 		escolhas.setPreferredSize(new Dimension(75, escolhas.getPreferredSize().height));
 		System.out.println(escolhas.isPreferredSizeSet());
@@ -176,11 +176,18 @@ public class Proj_Frame {
 					p.display(null);
 					auxiliar.dispose();
 				}
+				
+				else if(((String) escolhas.getSelectedItem()).equals("Gráfico de barras")) {
+					System.out.println("A imprimir gráfico de barras");
+					BarChartGraph b = new BarChartGraph();
+					b.display(null);
+					auxiliar.dispose();
+				}
 
 				else {
 					Table table = new Table();
 					auxiliar.dispose();
-					table.criarJanela();
+					table.criarTabela();
 				}
 			}
 		});
@@ -613,6 +620,14 @@ public class Proj_Frame {
 		}
 	}
 
+	/**
+	 * Shows result message of detection
+	 * @param metrica1_long first metric 
+	 * @param metrica2_long second metric
+	 * @param threshold_m1_long value to compare to first metric
+	 * @param threshold_m2_long value to compare to first metric
+	 * @param combos List of JComboBoxes  
+	 */
 	private void alterarVis(JLabel metrica1_long, JLabel metrica2_long, JTextField threshold_m1_long,
 			JTextField threshold_m2_long, ArrayList<JComboBox<String>> combos) {
 
@@ -622,6 +637,10 @@ public class Proj_Frame {
 				+ " " + threshold_m2_long.getText() + ")");
 	}
 
+	/**
+	 * This method allow users to define value , metrics and connectors
+	 *@param alterar panel where will be inserted
+	 */
 	private void procura_avancada(JPanel alterar) {
 		// JCombo para escolher entre as métricas
 		String[] s_metricas = new String[] { "Métrica nº1:", "CYCLO", "LAA", "ATFD", "LOC" };
@@ -638,6 +657,11 @@ public class Proj_Frame {
 		alterar.add(metricas2);
 		alterar.add(operadores);
 	}
+	
+	/**
+	 * Open Excel file Long-Method.xlsx after clicking "Abrir Excel" button
+	 * @param up panel where the button will be inserted
+	 */
 
 	public void abrirExcel(JPanel up) {
 		JButton open_excel = new JButton("Abrir Excel");
@@ -653,9 +677,13 @@ public class Proj_Frame {
 		});
 
 	}
-
-	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
-	// IMPORT
+	
+	
+	/**
+	 * Create a JFileChooser to import file
+	 * Import only those type("xls" and "xlsx" ) of file 
+	 * @param down panel where the button will be inserted
+	 */
 	public void importarExcel(JPanel down) {
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
@@ -682,6 +710,14 @@ public class Proj_Frame {
 			}
 		});
 	}
+	
+	/**
+	 * This method shows to panel
+	 * result of detection (compare PMD and iPlasma)
+	 * when click the button "Calcular indicadores"
+	 * @param metodos where the result will be seen
+	 * @param up panel where the button will be inserted
+	 */
 
 	public void consultarIndicadores(JPanel metodos, JPanel up) {
 		for (int i = 1; i < 5; i++) {
@@ -790,6 +826,10 @@ public class Proj_Frame {
 		});
 		up.add(activate, BorderLayout.SOUTH);
 	}
+	
+	/**
+	 *Initialization of dimension and localization of frame
+	 */
 
 	private void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

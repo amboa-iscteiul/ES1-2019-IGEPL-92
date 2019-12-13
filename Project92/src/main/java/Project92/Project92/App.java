@@ -1,6 +1,7 @@
 package Project92.Project92;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.util.Iterator;
 
@@ -9,6 +10,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * 
+ * @author ES1-2019-IGEPL-92
+ *
+ */
 
 public class App {
 	
@@ -23,8 +29,9 @@ public class App {
     
     /**
      * Method to read an Excel File
-     *
+     * @param fileToRead file which will be read
      */
+    
     @SuppressWarnings("resource")
 	public static void readExcelFile(File fileToRead) {
 	    try {

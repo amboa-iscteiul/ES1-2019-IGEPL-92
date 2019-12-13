@@ -8,6 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author ES1-2019-IGEPL-92
+ *
+ */
+
 @SuppressWarnings("restriction")
 public class PieChartGraph extends Application {
 
@@ -15,6 +21,10 @@ public class PieChartGraph extends Application {
 		launch(args);
 	}
 
+	/**
+	 *Method to create a PieChart to compare the result of detection 
+	 * @param primaryStage used for visualization of PieChart
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
@@ -36,6 +46,13 @@ public class PieChartGraph extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+	
+	/**
+	 * 
+	 * @param section insert section to PieChart
+	 * @param value value to configure PieChart
+	 * @return data for PieChart
+	 */
 
 	public PieChart.Data data(String section, int value) {
 		PieChart.Data data = new PieChart.Data(section, value * 1000);
