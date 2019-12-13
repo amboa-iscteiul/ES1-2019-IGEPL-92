@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 public class Avaliacao_FerramentasTest extends TestCase {
 
 	public void testDci() {
+    
 		 
 	}
 
@@ -180,7 +181,7 @@ public class Avaliacao_FerramentasTest extends TestCase {
 		ArrayList<Boolean> output5_1 = af.Advance_search("LAA", "<", 10, "CYCLO", "<", 10, "OR");
 		ArrayList<Boolean> output6_1 = af.Advance_search("LAA", ">", 10, "CYCLO", ">", 10, "OR");
 		ArrayList<Boolean> output7_1 = af.Advance_search("LAA", "<", 10, "CYCLO", ">", 10, "OR");
-		ArrayList<Boolean> output8_1 = af.Advance_search("LAA", ">", 10, "CYCLO", "<", 10, "OR");
+		ArrayList<Boolean> output8_1 = af.Advance_search("LAA", ">", 10, "CYCLO", "<", 10, "OR");  
 		
 		//out do output5--------------------------------------------------------------------------------
 		ArrayList<Boolean> output5_out = af.Advance_search("CYCLO", "<", 0, "LAA", "<", 0, "OR");

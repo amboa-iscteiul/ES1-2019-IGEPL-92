@@ -554,7 +554,7 @@ public class Avaliacao_Ferramentas {
 		
 		}//FIM DO OR
 		//System.out.println(list);
-		return list;
+		return list;  
 }
 	
 
