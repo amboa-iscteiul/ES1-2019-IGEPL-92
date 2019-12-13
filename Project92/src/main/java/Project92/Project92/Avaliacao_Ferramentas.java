@@ -54,55 +54,107 @@ public class Avaliacao_Ferramentas {
 		}
 		return dci;
 	}
-	public static int customized_dci(ArrayList<Boolean> list) {
+	public static int customized_dci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(aux == list.get(j) && aux == true) {
 				dci++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(aux == list.get(j) && aux == true) {
+					dci++;
+				
+				}
+			}
+			
+			
+			
+			
+		}
 		return dci;	
 	}
-	public static int customized_dii(ArrayList<Boolean> list) {
+	public static int customized_dii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==true && aux == false) {
 				dii++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==true && aux == false) {
+					dii++;
+				}
+			}	
+		}
+		
+		
+		
+		
 		return dii;	
 	}
-	public static int customized_adci(ArrayList<Boolean> list) {
+	public static int customized_adci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==false && aux == false) {
 				adci++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==false && aux == false) {
+					adci++;
+				}
+			}
+		}
 		return adci;	
 	}
-	public static int customized_adii(ArrayList<Boolean> list) {
+	public static int customized_adii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==false && aux == true) {
 				adii++;
 			}
+		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==false && aux == true) {
+					adii++;
+				}
+			}
+			
+			
 		}
 		return adii;	
 	}

@@ -477,6 +477,11 @@ public class Proj_Frame {
 								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
 										ope);
 								System.out.println("lista = " + list);
+								dci = Avaliacao_Ferramentas.customized_dci(list,"long");
+								dii = Avaliacao_Ferramentas.customized_dii(list,"long");
+								adci = Avaliacao_Ferramentas.customized_adci(list,"long");
+								adii = Avaliacao_Ferramentas.customized_adii(list,"long");
+								System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
 							} else if (feature_envy.isSelected()) {
 								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
 								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
@@ -487,6 +492,11 @@ public class Proj_Frame {
 								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
 										ope);
 								System.out.println("list + " + list);
+								dci = Avaliacao_Ferramentas.customized_dci(list,"envy");
+								dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
+								adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
+								adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
+								System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
 							}
 
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
@@ -505,10 +515,11 @@ public class Proj_Frame {
 							double cyclo = Double.parseDouble(limite_cyclo);
 							double loc = Double.parseDouble(limite_loc);
 							list = Avaliacao_Ferramentas.normal_search("long", Simbolo_1, cyclo, Simbolo_2, loc);
-							dci = Avaliacao_Ferramentas.customized_dci(list);
-							dii = Avaliacao_Ferramentas.customized_dii(list);
-							adci = Avaliacao_Ferramentas.customized_adci(list);
-							adii = Avaliacao_Ferramentas.customized_adii(list);
+							dci = Avaliacao_Ferramentas.customized_dci(list,"long");
+							dii = Avaliacao_Ferramentas.customized_dii(list,"long");
+							adci = Avaliacao_Ferramentas.customized_adci(list,"long");
+							adii = Avaliacao_Ferramentas.customized_adii(list,"long");
+							System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
 							
 							//alterar valor dos indicadores de qualidade
 							getLabel("DCI").setText("" + dci);
@@ -528,6 +539,12 @@ public class Proj_Frame {
 							double atfd = Double.parseDouble(limite_atfd);
 							double laa = Double.parseDouble(limite_laa);
 							list = Avaliacao_Ferramentas.normal_search("envy", Simbolo_1, atfd, Simbolo_2, laa);
+							dci = Avaliacao_Ferramentas.customized_dci(list,"envy");
+							dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
+							adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
+							adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
+							System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
+							
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
 
 						}
