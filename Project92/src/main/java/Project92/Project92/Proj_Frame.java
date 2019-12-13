@@ -30,20 +30,29 @@ import javax.swing.filechooser.FileSystemView;
  *
  */
 
-
 public class Proj_Frame {
 
 	private JFrame frame;
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
+	private ArrayList<JLabel> pers_labels = new ArrayList<JLabel>();
 	private boolean show = false;
 
 	private boolean ativo_long = false;
 	private boolean ativo_feat = false;
-
 	private boolean proc_avancada = false;
 
 	private String operador_logico = "E";
-	
+
+	private String visualizacao_geral = "Regra personalizada";
+
+	private JLabel regra_personalizada;
+
+	// DCI, DII, ADCI e ADII personalizados
+	private int dci = 0;
+	private int dii = 0;
+	private int adci = 0;
+	private int adii = 0;
+
 	/**
 	 * Class constructor
 	 */
@@ -57,18 +66,24 @@ public class Proj_Frame {
 	}
 
 	/**
-	 * Method meant to add components to the main frame
+	 * Method meant to add components to the main frame. Tools_pane is a general
+	 * panel including all the basic Labels (DCI, DII, etc.) and their respective
+	 * results for each tool, including our customized tool within panels of their
+	 * own. South panel includes all buttons
 	 */
 	public void addFrameContent() {
 		frame.setLayout(new BorderLayout());
 
 		JPanel tools_pane = new JPanel(new BorderLayout());
-		JPanel titulos = new JPanel(new GridLayout(1, 2));
-		JPanel metodos = new JPanel(new GridLayout(4, 4));
+		JPanel titulos = new JPanel(new GridLayout(1, 3));
+		JPanel metodos = new JPanel(new GridLayout(4, 6));
 		JLabel PMD = new JLabel("PMD");
 		JLabel iPlasma = new JLabel("iPlasma");
+		JLabel regra = new JLabel("Regra Personalizada");
+		regra_personalizada = regra;
 		titulos.add(PMD);
 		titulos.add(iPlasma);
+		titulos.add(regra_personalizada);
 		tools_pane.add(titulos, BorderLayout.NORTH);
 		tools_pane.add(metodos, BorderLayout.CENTER);
 
@@ -95,9 +110,11 @@ public class Proj_Frame {
 		frame.add(tools_pane, BorderLayout.CENTER);
 		frame.add(south, BorderLayout.SOUTH);
 	}
-	
+
 	/**
-	 * Method meant to initialize the button which will then create a type of graphic 
+	 * Method meant to initialize the button which will then create a type of
+	 * graphic
+	 * 
 	 * @param up panel where the button will be inserted
 	 */
 	private void criarGrafico(JPanel up) {
@@ -109,15 +126,18 @@ public class Proj_Frame {
 			}
 		});
 	}
-	
+
 	/**
-	 * Method meant to choose a type of graphic between Pie Chart and Table to display
+	 * Method meant to choose from a JComboBox a type of graphic between Pie Chart
+	 * and Table to display When selected, the graphic will show up with DCI, DII,
+	 * ADCI and ADII for both iPlasma and PMD
+	 * 
 	 * @see shows the selected graphic
 	 */
 
 	private static void escolherTipoGrafico() {
 		// configurações da frame onde utilizador escolhe o que será utilizado
-		JFrame auxiliar = new JFrame("Escolha o tipo de gráfico");
+		final JFrame auxiliar = new JFrame("Escolha o tipo de gráfico");
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		auxiliar.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 		auxiliar.setVisible(true);
@@ -139,35 +159,34 @@ public class Proj_Frame {
 		auxiliar.add(ok);
 
 		// carregar em "ok" para ler o que foi selecionado na comboBox e devolver
-		// tabela/pie/grafico
+		// tabela/pie/grafico de barras
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (((String) escolhas.getSelectedItem()).equals("Pie Chart")) {
 					System.out.println("A imprimir PieChart");
-					// ALERT: Only called once!
 					PieChartGraph p = new PieChartGraph();
 					p.display(null);
+					auxiliar.dispose();
 				}
 
 				else {
-					// devolver tabela
-          Table table = new Table();
+					Table table = new Table();
+					auxiliar.dispose();
 					table.criarJanela();
-					// opcional: mudar else para else if com condição "igual" às anteriores
-					System.out.println("Teste Tabela");
 				}
 			}
 		});
 		auxiliar.pack();
-//		auxiliar.setSize(300, 300);
 
 	}
 
 	/**
-	 * Happens after clicking the "procura" button in the main frame
-	 * Method meant to add all necessary components for the search algorithm to work in the frame
-	 * Adds action listeners to the buttons so that the user can see the rule he is creating ("Pre-Visualização") and
-	 * save that same rule so it can be applied in the main frame
+	 * Happens after clicking the "procura" button in the main frame Method meant to
+	 * add all necessary components for the search algorithm to work in the frame
+	 * Adds action listeners to the buttons so that the user can see the rule he is
+	 * creating ("Pre-Visualização") and save that same rule so it can be applied in
+	 * the main frame
+	 * 
 	 * @param down panel where the button will be inserted
 	 * @see new aux frame with user's possible choices
 	 */
@@ -195,7 +214,7 @@ public class Proj_Frame {
 
 				// geral para ambos os paineis
 				final ArrayList<JComboBox<String>> combos = new ArrayList<>();
-				String[] v_sinais = new String[] { ">", "<" }; 
+				String[] v_sinais = new String[] { ">", "<" };
 				for (int i = 0; i < 4; i++)
 					combos.add(new JComboBox<String>(v_sinais));
 				ArrayList<JLabel> labels_need = new ArrayList<>();
@@ -262,7 +281,6 @@ public class Proj_Frame {
 				long_meth.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (long_meth.isSelected() && !ativo_long) {
-//							feature_envy.setSelected(false); //fazer se tiver tempo
 							feature_envy.setEnabled(false);
 							limites_sinais.setVisible(true);
 							ativo_long = true;
@@ -293,7 +311,7 @@ public class Proj_Frame {
 				JPanel botoes = new JPanel();
 				JButton pre_vis = new JButton("Pré-Visualizar");
 				JButton finish = new JButton("Ok");
-				
+
 				botoes.add(pre_vis);
 				botoes.add(finish);
 
@@ -409,44 +427,43 @@ public class Proj_Frame {
 
 				pre_vis.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String visualizar;
 						if (long_meth.isSelected())
-							visualizar = ("is_long_method: " + "(" + metrica1_long.getText() + " "
+							visualizacao_geral = ("is_long_method: " + "(" + metrica1_long.getText() + " "
 									+ ((String) (combos.get(0)).getSelectedItem()) + " " + threshold_m1_long.getText()
 									+ " " + operador_logico + " " + metrica2_long.getText() + " "
 									+ ((String) (combos.get(1)).getSelectedItem()) + " " + threshold_m2_long.getText()
 									+ ")");
 						else
-							visualizar = ("feature_envy: " + "(" + metrica1_feat.getText() + " "
+							visualizacao_geral = ("feature_envy: " + "(" + metrica1_feat.getText() + " "
 									+ ((String) (combos.get(2)).getSelectedItem()) + " " + threshold_m1_feat.getText()
 									+ " " + operador_logico + " " + metrica2_feat.getText() + " "
 									+ ((String) (combos.get(3)).getSelectedItem()) + " " + threshold_m2_feat.getText()
 									+ ")");
 
-						JOptionPane.showMessageDialog(aux, visualizar);
+						JOptionPane.showMessageDialog(aux, visualizacao_geral);
 					}
 				});
-				
+
 				// ADD DO ZÉ- AÇÃO DO OK- FAZER COM QUE ADICIONE NO PAINEL PRINCIPAL OS DCI,
 				// DII, ETC. DA REGRA IMPLEMENTADA
 				finish.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ArrayList<Boolean> list = new ArrayList<Boolean>();	
-						if(isAdvanced.isSelected()) {
-							String s_M1 = (String) ((JComboBox<String>)alterar.getComponent(0)).getSelectedItem();
+						ArrayList<Boolean> list = new ArrayList<Boolean>();
+						// AVANÇADO------------------------------------------------------------------------------------------
+						if (isAdvanced.isSelected()) {
+							String s_M1 = (String) ((JComboBox<String>) alterar.getComponent(0)).getSelectedItem();
 							System.out.println(s_M1);
-							String s_M2 = (String) ((JComboBox<String>)alterar.getComponent(1)).getSelectedItem();
+							String s_M2 = (String) ((JComboBox<String>) alterar.getComponent(1)).getSelectedItem();
 							System.out.println(s_M2);
-							String ope = (String) ((JComboBox<String>)alterar.getComponent(2)).getSelectedItem();
+							String ope = (String) ((JComboBox<String>) alterar.getComponent(2)).getSelectedItem();
 							System.out.println(ope);
-							if(ope.equals("E")) {
+							if (ope.equals("E")) {
 								ope = "AND";
-							}
-							else if(ope.equals("OU")) {
+							} else if (ope.equals("OU")) {
 								ope = "OR";
-								
+
 							}
-							if(long_meth.isSelected()) {
+							if (long_meth.isSelected()) {
 								String Simbolo_1 = (String) combos.get(0).getSelectedItem();
 								System.out.println(Simbolo_1);
 								String Simbolo_2 = (String) combos.get(1).getSelectedItem();
@@ -457,55 +474,71 @@ public class Proj_Frame {
 								System.out.println(limite_m2);
 								double m1 = Double.parseDouble(limite_m1);
 								double m2 = Double.parseDouble(limite_m2);
-								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
-								System.out.println("lista = " + list);	
-							}
-							else if(feature_envy.isSelected()) {
+								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
+										ope);
+								System.out.println("lista = " + list);
+							} else if (feature_envy.isSelected()) {
 								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
 								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
 								String limite_m1 = threshold_m1_feat.getText();
 								String limite_m2 = threshold_m2_feat.getText();
 								double m1 = Double.parseDouble(limite_m1);
 								double m2 = Double.parseDouble(limite_m2);
-								list =Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2, ope);
-								System.out.println("list + " +list);
+								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
+										ope);
+								System.out.println("list + " + list);
 							}
+
+							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
+
 						}
-							else if(!isAdvanced.isSelected() && long_meth.isSelected()){
-						
-						String Simbolo_1 = (String) combos.get(0).getSelectedItem();
-						String Simbolo_2 = (String) combos.get(1).getSelectedItem();
-						String limite_cyclo = threshold_m1_long.getText();
-						String limite_loc = threshold_m2_long.getText();
-						double cyclo = Double.parseDouble(limite_cyclo);
-						double loc = Double.parseDouble(limite_loc);
-						list = Avaliacao_Ferramentas.normal_search("long", Simbolo_1, cyclo, Simbolo_2,loc);
-						System.out.println(list);
-						int dci = Avaliacao_Ferramentas.customized_dci(list);
-						int dii = Avaliacao_Ferramentas.customized_dii(list);
-						int adci = Avaliacao_Ferramentas.customized_adci(list);
-						int adii = Avaliacao_Ferramentas.customized_adii(list);
-						System.out.println("dci " + dci + " dii " + dii + " adci " + adci + " adii " + adii);
+						// ------------------------------------------------------------------------------------------------------
+
+						// PESQUISA NORMAL---------------------------------------------------------------------------------------
+						// LONG_METHOD
+						else if (!isAdvanced.isSelected() && long_meth.isSelected()) {
+
+							String Simbolo_1 = (String) combos.get(0).getSelectedItem();
+							String Simbolo_2 = (String) combos.get(1).getSelectedItem();
+							String limite_cyclo = threshold_m1_long.getText();
+							String limite_loc = threshold_m2_long.getText();
+							double cyclo = Double.parseDouble(limite_cyclo);
+							double loc = Double.parseDouble(limite_loc);
+							list = Avaliacao_Ferramentas.normal_search("long", Simbolo_1, cyclo, Simbolo_2, loc);
+							dci = Avaliacao_Ferramentas.customized_dci(list);
+							dii = Avaliacao_Ferramentas.customized_dii(list);
+							adci = Avaliacao_Ferramentas.customized_adci(list);
+							adii = Avaliacao_Ferramentas.customized_adii(list);
+							
+							//alterar valor dos indicadores de qualidade
+							getLabel("DCI").setText("" + dci);
+							getLabel("DII").setText("" + dii);
+							getLabel("ADCI").setText("" + adci);
+							getLabel("ADII").setText("" + adii);
+							
+							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
+							aux.dispose();
+
+							// FEATURE_ENVY
+						} else if (!isAdvanced.isSelected() && feature_envy.isSelected()) {
+							String Simbolo_1 = (String) combos.get(2).getSelectedItem();
+							String Simbolo_2 = (String) combos.get(3).getSelectedItem();
+							String limite_atfd = threshold_m1_feat.getText();
+							String limite_laa = threshold_m2_feat.getText();
+							double atfd = Double.parseDouble(limite_atfd);
+							double laa = Double.parseDouble(limite_laa);
+							list = Avaliacao_Ferramentas.normal_search("envy", Simbolo_1, atfd, Simbolo_2, laa);
+							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
+
+						}
+						// ---------------------------------------------------------------------------------------------------------
+						regra_personalizada.setText(visualizacao_geral);
+
+						frame.pack();
 						aux.dispose();
-							}
-							else if(!isAdvanced.isSelected() && feature_envy.isSelected()){
-								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
-								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
-								String limite_atfd = threshold_m1_feat.getText();
-								String limite_laa = threshold_m2_feat.getText();
-								double atfd = Double.parseDouble(limite_atfd);
-								double laa = Double.parseDouble(limite_laa);
-								list = Avaliacao_Ferramentas.normal_search("envy", Simbolo_1, atfd, Simbolo_2, laa);
-								
-								
-								
-								
-								
-							}
-					
+
 					}
 				});
-
 
 				// adicionar CheckBox à frame
 				avancada.add(isAdvanced, BorderLayout.NORTH);
@@ -515,6 +548,35 @@ public class Proj_Frame {
 				aux.pack();
 			}
 		});
+	}
+
+	/**
+	 * Auxiliary function used in "procura" to fetch some labels created in another method through an attribute
+	 * @param def used to decide which label we will be getting
+	 * @return returns the label which corresponds with the string parameter
+	 */
+	private JLabel getLabel(String def) {
+		switch (def) {
+		case "DCI":
+			return pers_labels.get(0);
+		case "DII":
+			return pers_labels.get(1);
+		case "ADCI":
+			return pers_labels.get(2);
+		case "ADII":
+			return pers_labels.get(3);
+		default:
+			return null;
+		}
+	}
+
+	private void alterarVis(JLabel metrica1_long, JLabel metrica2_long, JTextField threshold_m1_long,
+			JTextField threshold_m2_long, ArrayList<JComboBox<String>> combos) {
+
+		visualizacao_geral = ("is_long_method: " + "(" + metrica1_long.getText() + " "
+				+ ((String) (combos.get(0)).getSelectedItem()) + " " + threshold_m1_long.getText() + " "
+				+ operador_logico + " " + metrica2_long.getText() + " " + ((String) (combos.get(1)).getSelectedItem())
+				+ " " + threshold_m2_long.getText() + ")");
 	}
 
 	private void procura_avancada(JPanel alterar) {
@@ -551,7 +613,7 @@ public class Proj_Frame {
 
 	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
 	// IMPORT
-	private void importarExcel(JPanel down) { // PAULO
+	private void importarExcel(JPanel down) {
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
 		import_excel.addActionListener(new ActionListener() {
@@ -580,64 +642,86 @@ public class Proj_Frame {
 
 	private void consultarIndicadores(JPanel metodos, JPanel up) {
 		for (int i = 1; i < 5; i++) {
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < 6; j++) {
 				switch (i) {
 				case 1:
 					JLabel label;
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 2 || j == 4)
 						label = new JLabel("DCI: ");
 					else if (j == 1) {
 						label = new JLabel("" + Avaliacao_Ferramentas.dci("PMD"));
 						label.setVisible(false);
 						labels.add(label);
-					} else {
+					} else if (j == 3) {
 						label = new JLabel("" + Avaliacao_Ferramentas.dci("iPlasma"));
 						label.setVisible(false);
 						labels.add(label);
+					} else {
+						label = new JLabel("" + dci); // INSERIR VALOR PERSONALIZADO DCI
+						label.setVisible(false);
+						pers_labels.add(label);
+						labels.add(label);
 					}
+
 					metodos.add(label);
 					break;
 				case 2:
 					JLabel label1;
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 2 || j == 4)
 						label1 = new JLabel("DII: ");
 					else if (j == 1) {
 						label1 = new JLabel("" + Avaliacao_Ferramentas.dii("PMD"));
 						label1.setVisible(false);
 						labels.add(label1);
-					} else {
+					} else if (j == 3) {
 						label1 = new JLabel("" + Avaliacao_Ferramentas.dii("iPlasma"));
 						label1.setVisible(false);
 						labels.add(label1);
+					} else {
+						label1 = new JLabel("" + dii); // INSERIR VALOR PERSONALIZADO DII
+						label1.setVisible(false);
+						pers_labels.add(label1);
+						labels.add(label1);
 					}
+
 					metodos.add(label1);
 					break;
 				case 3:
 					JLabel label2;
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 2 || j == 4)
 						label2 = new JLabel("ADCI: ");
 					else if (j == 1) {
 						label2 = new JLabel("" + Avaliacao_Ferramentas.adci("PMD"));
 						label2.setVisible(false);
 						labels.add(label2);
-					} else {
+					} else if (j == 3) {
 						label2 = new JLabel("" + Avaliacao_Ferramentas.adci("iPlasma"));
 						label2.setVisible(false);
+						labels.add(label2);
+					} else {
+						label2 = new JLabel("" + adci); // INSERIR VALOR PERSONALIZADO ADCI
+						label2.setVisible(false);
+						pers_labels.add(label2);
 						labels.add(label2);
 					}
 					metodos.add(label2);
 					break;
 				case 4:
 					JLabel label3;
-					if (j == 0 || j == 2)
+					if (j == 0 || j == 2 || j == 4)
 						label3 = new JLabel("ADII: ");
 					else if (j == 1) {
 						label3 = new JLabel("" + Avaliacao_Ferramentas.adii("PMD"));
 						label3.setVisible(false);
 						labels.add(label3);
-					} else {
+					} else if (j == 3) {
 						label3 = new JLabel("" + Avaliacao_Ferramentas.adii("iPlasma"));
 						label3.setVisible(false);
+						labels.add(label3);
+					} else {
+						label3 = new JLabel("" + adii); // INSERIR VALOR PERSONALIZADO ADII
+						label3.setVisible(false);
+						pers_labels.add(label3);
 						labels.add(label3);
 					}
 					metodos.add(label3);

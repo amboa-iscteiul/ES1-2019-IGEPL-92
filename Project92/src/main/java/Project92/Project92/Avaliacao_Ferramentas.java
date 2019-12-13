@@ -52,7 +52,6 @@ public class Avaliacao_Ferramentas {
 				if (aux == ferr_bool && aux == true)
 					dci++;;
 		}
-		System.out.println("DCI da ferramenta " + ferramenta + " é igual a: " + dci);
 		return dci;
 	}
 	public static int customized_dci(ArrayList<Boolean> list,String met) {
@@ -581,7 +580,6 @@ public class Avaliacao_Ferramentas {
 				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					dii++;;
 		}
-		System.out.println("DII da ferramenta " + ferramenta + " é igual a: " + dii);
 		return dii;
 	}
 
@@ -600,7 +598,6 @@ public class Avaliacao_Ferramentas {
 				if (aux == excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					adci++;;
 		}
-		System.out.println("ADCI da ferramenta " + ferramenta + " é igual a: " + adci);
 		return adci;
 	}
 
@@ -619,7 +616,6 @@ public class Avaliacao_Ferramentas {
 				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == true)
 					adii++;;
 		}
-		System.out.println("ADII da ferramenta " + ferramenta + " é igual a: " + adii);
 		return adii;
 	}
 
