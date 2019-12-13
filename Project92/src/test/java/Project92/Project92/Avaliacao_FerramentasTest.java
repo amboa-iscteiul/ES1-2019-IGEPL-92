@@ -9,8 +9,13 @@ import junit.framework.TestCase;
 public class Avaliacao_FerramentasTest extends TestCase {
 
 	public void testDci() {
-    
-		 
+       Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+       int output1 = af.dci("iPlasma");
+       int output2 = af.dci("pmd");
+       assertNotEquals(0, output1);
+       assertNotEquals(0, output2);	 
+       
+	    
 	}
 
 	public void testCustomized_dci() {
@@ -209,15 +214,27 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	}  
 
 	public void testDii() {
-		fail("Not yet implemented");
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+	       int output1 = af.dii("iPlasma");
+	       int output2 = af.dii("pmd");
+	       assertEquals(0, output1);
+	       assertNotEquals(0, output2);	  
 	}
 
 	public void testAdci() {
-		fail("Not yet implemented");
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+	       int output1 = af.adci("iPlasma");
+	       int output2 = af.adci("pmd");
+	       assertNotEquals(0, output1);
+	       assertNotEquals(0, output2);	 
 	}
 
 	public void testAdii() {
-		fail("Not yet implemented");
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+	       int output1 = af.adii("iPlasma");
+	       int output2 = af.adii("pmd");
+	       assertEquals(0, output1);
+	       assertNotEquals(0, output2);	 
 	}
 
 }

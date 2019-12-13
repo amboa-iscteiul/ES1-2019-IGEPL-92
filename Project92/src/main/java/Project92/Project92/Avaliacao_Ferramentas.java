@@ -9,12 +9,19 @@ import java.util.ArrayList;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * 
+ * @author ES1-2019-IGEPL-92
+ *
+ */
 public class Avaliacao_Ferramentas {
 
 	private static File file = new File("Long-Method.xlsx");
 	private static XSSFSheet excel_sheet;
 
-	
+	/**
+	 * this method creates a excel sheet 
+	 */
 	private static void getSheet() {
 		try {
 			FileInputStream file = new FileInputStream(Avaliacao_Ferramentas.file);
@@ -28,6 +35,11 @@ public class Avaliacao_Ferramentas {
 		}
 	}
 
+	/**
+	 * this method returns the dci for the iPlasma or the PMD 
+	 * @param ferramenta - String to differentiate iPlasma from PMd
+	 * @return count of dci
+	 */
 	public static int dci(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
@@ -37,7 +49,7 @@ public class Avaliacao_Ferramentas {
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			ferr_bool = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
-			if (ferramenta.equals("iPlasma")) {
+			if (ferramenta.equals("iPlasma")) {  
 				if (aux == ferr_bool && aux == true)
 					dci++;
 			}
@@ -47,6 +59,13 @@ public class Avaliacao_Ferramentas {
 		}
 		return dci;
 	}
+	
+	/**
+	 * this method returns the dci for the iPlasma or the PMD with the method crated by the user
+	 * @param list - list of booleans with the result analysed with the method created by the user
+	 * @param met - String to differentiate iPlasma from PMd
+	 * @return count of dci
+	 */
 	public static int customized_dci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
@@ -75,6 +94,12 @@ public class Avaliacao_Ferramentas {
 		}
 		return dci;	  
 	}
+	/**
+	 * this method returns the dii for the iPlasma or the PMD with the method crated by the user
+	 * @param list- list of booleans with the result analysed with the method created by the user
+	 * @param met - String to differentiate iPlasma from PMd
+	 * @return count of dii
+	 */
 	public static int customized_dii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
@@ -103,6 +128,12 @@ public class Avaliacao_Ferramentas {
 		
 		return dii;	
 	}
+	/**
+	 * this method returns the adci for the iPlasma or the PMD with the method crated by the user
+	 * @param list - list of booleans with the result analysed with the method created by the user
+	 * @param met - String to differentiate iPlasma from PMd
+	 * @return count of adci
+	 */
 	public static int customized_adci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
@@ -126,6 +157,12 @@ public class Avaliacao_Ferramentas {
 		}
 		return adci;	
 	}
+	/**
+	 * this method returns the adii for the iPlasma or the PMD with the method crated by the user
+	 * @param list - list of booleans with the result analysed with the method created by the user
+	 * @param met - String to differentiate iPlasma from PMd
+	 * @return - count of adii
+	 */
 	public static int customized_adii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
@@ -153,7 +190,15 @@ public class Avaliacao_Ferramentas {
 	}
 	
 	
-	
+	/**
+	 * function that alows the user to create his own rules in the is-long_method and is_feature_envy method to detect errors
+	 * @param Met - String to differentiate if it's going to compare to the is_Long_Method or the is_feature_envy
+	 * @param s1 -  Symbol(lesser than or greater then) chosen by the user for the first metric, cyclo for is_long_method or atfd for is_feature_envy
+	 * @param t1 - Limit chosen by the user for the first metric
+	 * @param s2 - Symbol(lesser than or greater then) chosen by the user for the first metric, LOC for is_long_method or LAA for is_feature_envy
+	 * @param t2 - Limit chosen by the user for the second metric
+	 * @return list of booleans in analysing is_long-method or is-feature_envy with the rules the user chose
+	 */
 	public static ArrayList<Boolean> normal_search(String Met,String s1,double t1,String s2,double t2) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
@@ -307,7 +352,18 @@ public class Avaliacao_Ferramentas {
 		//System.out.println(list);
 			 return list;
 	}
-	
+	/**
+	 * This function serves for the user can create his/her own method to detect errors, it allows to chose two metrics 
+	 * and the symbols,thresholds and logic operator that together it makes a new method to detect error
+	 * @param Metrica_1 - First metric chosen by the user
+	 * @param s_Metrica_1 - Symbol(lesser than or greater then) chosen by the user for the first metric
+	 * @param threshold_Metrica_1 - Limit chosen by the user for the first metric
+	 * @param Metrica_2 - Second metric chosen by the user
+	 * @param s_Metrica_2 - Symbol(lesser than or greater then) chosen by the user for the  metric
+	 * @param threshold_Metrica_2 - Limit chosen by the user for the second metric
+	 * @param Ope_Log - logic operator(AND or OR) for the result of the first and second metric
+	 * @return List with booleans to compare to either iPlasma or PMD
+	 */
 	@SuppressWarnings("static-access")
 	public static ArrayList<Boolean> Advance_search(String Metrica_1,String s_Metrica_1,double threshold_Metrica_1,String Metrica_2,String s_Metrica_2,double threshold_Metrica_2,String Ope_Log) {
 		int x=0;//numero da cell da metrica 1 escolhida
@@ -557,7 +613,11 @@ public class Avaliacao_Ferramentas {
 		return list;  
 }
 	
-
+    /**
+     * this method returns the dii for the iPlasma or the PMD 
+	 * @param ferramenta - String to differentiate iPlasma from PMd
+	 * @return count of dii
+     */
 	public static int dii(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
@@ -576,6 +636,11 @@ public class Avaliacao_Ferramentas {
 		return dii;
 	}
 
+	 /**
+	  * this method returns the adci for the iPlasma or the PMD 
+	  * @param ferramenta - String to differentiate iPlasma from PMd
+	  * @return count of adci
+	  */
 	public static int adci(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
@@ -591,18 +656,23 @@ public class Avaliacao_Ferramentas {
 				if (aux == excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					adci++;;
 		}
-		return adci;
+		return adci;  
 	}
 
-	public static int adii(String ferramenta) {
+	 /**
+	  * this method returns the adii for the iPlasma or the PMD 
+	  * @param ferramenta - String to differentiate iPlasma from PMd
+	  * @return count of adii
+	  */
+	public static int adii(String ferramenta) {  
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
-		boolean aux;
+		boolean aux;  
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == true)
+				if ((aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == true))
 					adii++;
 			}
 			else
