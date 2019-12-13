@@ -128,7 +128,7 @@ public class Proj_Frame {
 		auxiliar.add(titulo);
 
 		// criar comboBox
-		String[] str = new String[] { "Pie Chart", "Tabela", "Gráfico" };
+		String[] str = new String[] { "Pie Chart", "Tabela", "Gráfico Barras" };
 		final JComboBox<String> escolhas = new JComboBox<String>(str);
 		escolhas.setPreferredSize(new Dimension(75, escolhas.getPreferredSize().height));
 		System.out.println(escolhas.isPreferredSizeSet());
@@ -149,10 +149,10 @@ public class Proj_Frame {
 					p.display(null);
 				}
 				//Grafico de Linhas, só dá para pedir um gráfico de cada vez
-				if(((String) escolhas.getSelectedItem()).equals("Gráfico")) {
-					System.out.println("A imprimir LineChart");
-					LineChartGraph g = new LineChartGraph();
-					g.display(null);
+				if(((String) escolhas.getSelectedItem()).equals("Gráfico Barras")) {
+					System.out.println("A imprimir BarChart");
+					BarChartGraph b = new BarChartGraph();
+					b.display(null);
 				}
 
 				else {
