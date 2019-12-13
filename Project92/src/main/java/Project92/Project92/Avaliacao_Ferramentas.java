@@ -31,20 +31,18 @@ public class Avaliacao_Ferramentas {
 	public static int dci(String ferramenta) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
-		boolean aux;
-		boolean ferr_bool_pmd;
-		boolean ferr_bool_plasma;
+		boolean aux; 
+		boolean ferr_bool;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
-			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
-			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
+			ferr_bool = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux == ferr_bool_plasma && aux == true)
+				if (aux == ferr_bool && aux == true)
 					dci++;
 			}
 			else
-				if (aux == ferr_bool_pmd && aux == true)
+				if (aux == ferr_bool && aux == true)
 					dci++;;
 		}
 		return dci;
@@ -71,8 +69,11 @@ public class Avaliacao_Ferramentas {
 				}
 			}
 			
+			
+			
+			
 		}
-		return dci;	
+		return dci;	  
 	}
 	public static int customized_dii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
@@ -175,7 +176,7 @@ public class Avaliacao_Ferramentas {
 				 }
 				 
 			 }
-			 else if(s1.equals(s2) && s1.equals(">")) {
+			  if(s1.equals(s2) && s1.equals(">")){
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
@@ -190,7 +191,7 @@ public class Avaliacao_Ferramentas {
 				
 			 }
 			 
-			 else if(s1.equals(">") && s2.equals("<")) {
+			  if(s1.equals(">") && s2.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
@@ -204,7 +205,7 @@ public class Avaliacao_Ferramentas {
 				 
 				 } 
 			 }
-			 else if(s1.equals("<") && s2.equals(">")) {
+			  if(s1.equals("<") && s2.equals(">")) {
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
@@ -356,7 +357,7 @@ public class Avaliacao_Ferramentas {
 			}//fim de primeira hipotese AND e <
 //--------------------------------------------------------------------------------------------------			
 			//inicio de segunda hipotese, AND e >
-			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
+			 if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -385,7 +386,7 @@ public class Avaliacao_Ferramentas {
 		}//fim de segunda  hipotese AND e >
 //-------------------------------------------------------------------------------------------------------
 		//inicio de terceira hipotese AND e <,>	
-			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
+			 if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -412,7 +413,7 @@ public class Avaliacao_Ferramentas {
 		}//fim de terceira hipotese AND e <,>		
 //--------------------------------------------------------------------------------------------------------			
 		//inicio de quarta hipotese AND e >,<	
-			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
+			 if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -440,7 +441,7 @@ public class Avaliacao_Ferramentas {
 //-------------------------------------------------------------------------------------------------------			
 		}//FIM DO AND--------------------------------------------------------------------------------------
 		
-		else if(Ope_Log.equals("OR")) {//INICIO DO OR--------------------------------------------------------------
+		 if(Ope_Log.equals("OR")) {//INICIO DO OR--------------------------------------------------------------
 			//inicio da quinta hipotese OR e <
 			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
@@ -469,7 +470,7 @@ public class Avaliacao_Ferramentas {
 		}//fim de quinta hipotese OR e <
 //------------------------------------------------------------------------------------------------
 			//inicio de sexta hipotese, OR e >
-			else if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
+			if(s_Metrica_1.equals(s_Metrica_2) && s_Metrica_1.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -498,7 +499,7 @@ public class Avaliacao_Ferramentas {
 		}//fim de sexta hipotese OR e >
 //----------------------------------------------------------------------------------------------------
 			//inicio de sétima hipotese OR e <,>	
-			else if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
+			 if( s_Metrica_1.equals("<") && s_Metrica_2.equals(">")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -525,7 +526,7 @@ public class Avaliacao_Ferramentas {
 		}//fim de sétima hipotese OR e <,>	
 //------------------------------------------------------------------------------------------------------			
 			//inicio de oitava hipotese OR e >,<	
-			else if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
+			 if( s_Metrica_1.equals(">") && s_Metrica_2.equals("<")) {
 				for (int i = 1; i < maxRows; i++) {
 					double value_M1=0;
 					double value_M2=0;
@@ -553,7 +554,7 @@ public class Avaliacao_Ferramentas {
 		
 		}//FIM DO OR
 		//System.out.println(list);
-		return list;
+		return list;  
 }
 	
 
@@ -561,19 +562,15 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
 		boolean aux;
-		boolean ferr_bool_pmd;
-		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
-			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
-			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux != ferr_bool_plasma  && aux == false)
+				if (aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == false)
 					dii++;
 			}
 			else
-				if (aux != ferr_bool_pmd && aux == false)
+				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					dii++;;
 		}
 		return dii;
@@ -583,19 +580,15 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
 		boolean aux;
-		boolean ferr_bool_pmd;
-		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
-			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
-			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux == ferr_bool_plasma && aux == false)
+				if (aux == excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == false)
 					adci++;
 			}
 			else
-				if (aux == ferr_bool_pmd && aux == false)
+				if (aux == excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					adci++;;
 		}
 		return adci;
@@ -605,19 +598,15 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
 		boolean aux;
-		boolean ferr_bool_pmd;
-		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
-			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
-			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux != ferr_bool_plasma && aux == true)
+				if (aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == true)
 					adii++;
 			}
 			else
-				if (aux != ferr_bool_pmd && aux == true) 
+				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == true)
 					adii++;;
 		}
 		return adii;
