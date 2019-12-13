@@ -527,7 +527,6 @@ public class Proj_Frame {
 	
 	/**
 	 * Open Excel file Long-Method.xlsx after clicking "Abrir Excel" button
-	 * 
 	 * @param up panel where the button will be inserted
 	 */
 
@@ -547,8 +546,10 @@ public class Proj_Frame {
 	}
 
 	/**
-	 * 
+	 * Create a JFileChooser to import file
+	 * Import only those type("xls" and "xlsx" ) of file 
 	 * @param down panel where the button will be inserted
+	 * 
 	 */
 	private void importarExcel(JPanel down) { 
 		JButton import_excel = new JButton("Importar Excel");
