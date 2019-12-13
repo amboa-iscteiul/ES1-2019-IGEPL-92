@@ -1,9 +1,5 @@
 package Project92.Project92;
 
-import java.util.ArrayList;
-
-import org.apache.poi.util.SystemOutLogger;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,8 +10,6 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
 public class PieChartGraph extends Application {
-
-	public static Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();
 
 	public void display(String[] args) {
 		launch(args);
