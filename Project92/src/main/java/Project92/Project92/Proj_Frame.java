@@ -148,7 +148,7 @@ public class Proj_Frame {
 					PieChartGraph p = new PieChartGraph();
 					p.display(null);
 				}
-				//Grafico de Linhas
+				//Grafico de Linhas, só dá para pedir um gráfico de cada vez
 				if(((String) escolhas.getSelectedItem()).equals("Gráfico")) {
 					System.out.println("A imprimir LineChart");
 					LineChartGraph g = new LineChartGraph();
