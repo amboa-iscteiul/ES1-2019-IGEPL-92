@@ -2,6 +2,7 @@ package Project92.Project92;
 
 import java.util.ArrayList;
 
+
 import org.apache.poi.util.SystemOutLogger;
 
 import javafx.application.Application;
@@ -11,6 +12,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
+
+/**
+ * 
+ * @author ES1-2019-IGEPL-92
+ *
+ */
 
 @SuppressWarnings("restriction")
 public class PieChartGraph extends Application {

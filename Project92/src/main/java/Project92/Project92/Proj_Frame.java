@@ -524,6 +524,12 @@ public class Proj_Frame {
 		alterar.add(metricas2);
 		alterar.add(operadores);
 	}
+	
+	/**
+	 * Open Excel file Long-Method.xlsx after clicking "Abrir Excel" button
+	 * 
+	 * @param up panel where the button will be inserted
+	 */
 
 	private void abrirExcel(JPanel up) {
 		JButton open_excel = new JButton("Abrir Excel");
@@ -540,9 +546,11 @@ public class Proj_Frame {
 
 	}
 
-	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
-	// IMPORT
-	private void importarExcel(JPanel down) { // PAULO
+	/**
+	 * 
+	 * @param down panel where the button will be inserted
+	 */
+	private void importarExcel(JPanel down) { 
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
 		import_excel.addActionListener(new ActionListener() {
@@ -568,7 +576,7 @@ public class Proj_Frame {
 				}else {
 					if(result == JFileChooser.APPROVE_OPTION) {
 						File f = importa.getSelectedFile();
-						System.out.println("Abriu" + importa.getSelectedFile().getName());
+						System.out.println("Abriu " + importa.getSelectedFile().getName());
 					}
 				}
 				
