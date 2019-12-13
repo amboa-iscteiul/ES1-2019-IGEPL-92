@@ -34,10 +34,10 @@ public class Proj_Frame {
 
 	public JFrame frame;
 	public JFrame aux;
-	
+
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private ArrayList<JLabel> pers_labels = new ArrayList<JLabel>();
-	
+
 	public JRadioButton long_meth;
 	public JRadioButton feature_envy;
 	public JCheckBox isAdvanced;
@@ -51,7 +51,7 @@ public class Proj_Frame {
 	private String visualizacao_geral = "Regra personalizada";
 
 	private JLabel regra_personalizada;
-	
+
 	public JButton pre_vis;
 	public JButton finish;
 
@@ -193,10 +193,13 @@ public class Proj_Frame {
 	 * add all necessary components for the search algorithm to work in the frame
 	 * Adds action listeners to the buttons so that the user can see the rule he is
 	 * creating ("Pre-Visualização") and save that same rule so it can be applied in
-	 * the main frame
+	 * the main frame Has JRadioButtons/JCheckBox so the user can choose the method
+	 * he wants to compare his rules to (whether advanced or simple search).
+	 * 
+	 * Shows a new aux frame with users possible choices
 	 * 
 	 * @param down panel where the button will be inserted
-	 * @see new aux frame with user's possible choices
+	 *
 	 */
 	public void procura(JPanel down) {
 		JButton proc = new JButton("Procura");
@@ -484,16 +487,16 @@ public class Proj_Frame {
 								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
 										ope);
 								System.out.println("lista = " + list);
-								dci = Avaliacao_Ferramentas.customized_dci(list,"long");
-								dii = Avaliacao_Ferramentas.customized_dii(list,"long");
-								adci = Avaliacao_Ferramentas.customized_adci(list,"long");
-								adii = Avaliacao_Ferramentas.customized_adii(list,"long");
-								
+								dci = Avaliacao_Ferramentas.customized_dci(list, "long");
+								dii = Avaliacao_Ferramentas.customized_dii(list, "long");
+								adci = Avaliacao_Ferramentas.customized_adci(list, "long");
+								adii = Avaliacao_Ferramentas.customized_adii(list, "long");
+
 								getLabel("DCI").setText("" + dci);
 								getLabel("DII").setText("" + dii);
 								getLabel("ADCI").setText("" + adci);
 								getLabel("ADII").setText("" + adii);
-							
+
 							} else if (feature_envy.isSelected()) {
 								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
 								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
@@ -504,11 +507,11 @@ public class Proj_Frame {
 								list = Avaliacao_Ferramentas.Advance_search(s_M1, Simbolo_1, m1, s_M2, Simbolo_2, m2,
 										ope);
 								System.out.println("list + " + list);
-								dci = Avaliacao_Ferramentas.customized_dci(list,"envy");
-								dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
-								adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
-								adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
-								
+								dci = Avaliacao_Ferramentas.customized_dci(list, "envy");
+								dii = Avaliacao_Ferramentas.customized_dii(list, "envy");
+								adci = Avaliacao_Ferramentas.customized_adci(list, "envy");
+								adii = Avaliacao_Ferramentas.customized_adii(list, "envy");
+
 								getLabel("DCI").setText("" + dci);
 								getLabel("DII").setText("" + dii);
 								getLabel("ADCI").setText("" + adci);
@@ -520,7 +523,8 @@ public class Proj_Frame {
 						}
 						// ------------------------------------------------------------------------------------------------------
 
-						// PESQUISA NORMAL---------------------------------------------------------------------------------------
+						// PESQUISA
+						// NORMAL---------------------------------------------------------------------------------------
 						// LONG_METHOD
 						else if (!isAdvanced.isSelected() && long_meth.isSelected()) {
 
@@ -531,18 +535,19 @@ public class Proj_Frame {
 							double cyclo = Double.parseDouble(limite_cyclo);
 							double loc = Double.parseDouble(limite_loc);
 							list = Avaliacao_Ferramentas.normal_search("long", Simbolo_1, cyclo, Simbolo_2, loc);
-							dci = Avaliacao_Ferramentas.customized_dci(list,"long");
-							dii = Avaliacao_Ferramentas.customized_dii(list,"long");
-							adci = Avaliacao_Ferramentas.customized_adci(list,"long");
-							adii = Avaliacao_Ferramentas.customized_adii(list,"long");
-							System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
-							
-							//alterar valor dos indicadores de qualidade
+							dci = Avaliacao_Ferramentas.customized_dci(list, "long");
+							dii = Avaliacao_Ferramentas.customized_dii(list, "long");
+							adci = Avaliacao_Ferramentas.customized_adci(list, "long");
+							adii = Avaliacao_Ferramentas.customized_adii(list, "long");
+							System.out
+									.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
+
+							// alterar valor dos indicadores de qualidade
 							getLabel("DCI").setText("" + dci);
 							getLabel("DII").setText("" + dii);
 							getLabel("ADCI").setText("" + adci);
 							getLabel("ADII").setText("" + adii);
-							
+
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
 							aux.dispose();
 
@@ -555,15 +560,15 @@ public class Proj_Frame {
 							double atfd = Double.parseDouble(limite_atfd);
 							double laa = Double.parseDouble(limite_laa);
 							list = Avaliacao_Ferramentas.normal_search("envy", Simbolo_1, atfd, Simbolo_2, laa);
-							dci = Avaliacao_Ferramentas.customized_dci(list,"envy");
-							dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
-							adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
-							adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
+							dci = Avaliacao_Ferramentas.customized_dci(list, "envy");
+							dii = Avaliacao_Ferramentas.customized_dii(list, "envy");
+							adci = Avaliacao_Ferramentas.customized_adci(list, "envy");
+							adii = Avaliacao_Ferramentas.customized_adii(list, "envy");
 							getLabel("DCI").setText("" + dci);
 							getLabel("DII").setText("" + dii);
 							getLabel("ADCI").setText("" + adci);
 							getLabel("ADII").setText("" + adii);
-							
+
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
 
 						}
@@ -587,7 +592,9 @@ public class Proj_Frame {
 	}
 
 	/**
-	 * Auxiliary function used in "procura" to fetch some labels created in another method through an attribute
+	 * Auxiliary function used in "procura" to fetch some labels created in another
+	 * method through an attribute
+	 * 
 	 * @param def used to decide which label we will be getting
 	 * @return returns the label which corresponds with the string parameter
 	 */
