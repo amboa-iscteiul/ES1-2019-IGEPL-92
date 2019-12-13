@@ -1,105 +1,84 @@
 package Project92.Project92;
 
 import static org.junit.Assert.*;
-
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.stage.Stage;
+
 
 public class PieChartGraphTest {
 
 	
-	PieChartGraph piechartgraph;
-	Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	PieChartGraph pieChartGraph;
+	@SuppressWarnings("restriction")
+	Stage stage;
 
 	@Before
 	public void setUp() throws Exception {
+		this.pieChartGraph = new PieChartGraph();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testDisplay() {
-			fail("Not yet implemented");
-	}
-
+	@SuppressWarnings("restriction")
 	@Test
 	public void testStartStage() {
-		fail("Not yet implemented");
-	}
+		assertNotNull(this.pieChartGraph);
+		ObservableList<PieChart.Data> listOfData = null;
+		
+		assertNull(listOfData);
+		
+		PieChart.Data data = this.pieChartGraph.data("Section 1", 1);
+		assertNotNull(data);
+		
+		listOfData = FXCollections.observableArrayList(data);
+		assertNotNull(listOfData);
+		assertTrue(!(listOfData.isEmpty()));
+		/*
+		PieChart chart = new PieChart(listOfData);
+		Group group = new Group(chart);
+		Scene scene = new Scene(group, 500, 500);
+		assertNotNull(chart);
+		assertNotNull(group);
+		assertNotNull(scene);
+		*/
+		try {
+			this.pieChartGraph.start(new Stage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	} 
+	
 
 	@Test
 	public void testData() {
-		fail("Not yet implemented");
+		assertNotNull(this.pieChartGraph);
+		String section = null;
+		int value =0;
+		assertNull(section);
+		assertNotNull(value);
+		
+		section = "Section 1";
+		value = 1;
+		assertNotNull(section);
+		assertNotNull(value);
+		
+		PieChart.Data data1 = new PieChart.Data(section, value * 1000);
+		assertNotNull(data1);
+
+		PieChart.Data data2 =this.pieChartGraph.data(section, value);
+		assertNotNull(data2);
+		assertNotNull(this.pieChartGraph.data(section, value));
+		this.pieChartGraph.data(section, value);
 	}
 
-	@Test
-	public void testLaunchClassOfQextendsApplicationStringArray() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testLaunchStringArray() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testApplication() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testInit() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testStartStage1() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testStop() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetHostServices() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetParameters() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNotifyPreloader() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUserAgentStylesheet() {
-			fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetUserAgentStylesheet() {
-		fail("Not yet implemented");
-	}
 
 }
