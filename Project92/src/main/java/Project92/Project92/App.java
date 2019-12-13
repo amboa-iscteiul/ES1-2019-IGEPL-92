@@ -25,7 +25,8 @@ public class App {
      * Method to read an Excel File
      *
      */
-    public static void readExcelFile(File fileToRead) {
+    @SuppressWarnings("resource")
+	public static void readExcelFile(File fileToRead) {
 	    try {
 	    	FileInputStream file = new FileInputStream(fileToRead);
 		    //Create Workbook instance holding reference to .xlsx file
@@ -48,6 +49,8 @@ public class App {
 				        case STRING:
 				            System.out.print(cell.getStringCellValue() + "\t");
 				            break;
+					default:
+						break;
 			        }
 			    }
 			    System.out.println("\n");
