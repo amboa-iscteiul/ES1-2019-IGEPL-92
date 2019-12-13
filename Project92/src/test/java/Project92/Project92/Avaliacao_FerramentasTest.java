@@ -14,7 +14,7 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	Avaliacao_Ferramentas avaliacao_ferramentas;
 	File file = new File("Long-Method.xlsx");
 	static XSSFSheet excel_sheet;
-	String ferramenta = new String("Qualquer texto entre aspas é uma String");
+	String ferramenta = new String("");
 	boolean aux;
 	ArrayList<Boolean> list;
 	
@@ -32,8 +32,6 @@ public class Avaliacao_FerramentasTest extends TestCase {
 		int output2 = af.dci("pmd");
 		assertNotEquals(0, output1);
 		assertNotEquals(0, output2);
-		//assertEquals(0, output1);
-		//assertEquals(0, output1);
 	}
 
 	public void testCustomized_dci() {
@@ -73,6 +71,8 @@ public class Avaliacao_FerramentasTest extends TestCase {
 		assertNotNull(Avaliacao_Ferramentas.adci(ferramenta));
 		ferramenta = "PMD";
 		assertNotNull(Avaliacao_Ferramentas.adci(ferramenta));
+		
+		
 	}
 
 	public void testAdii() {
@@ -81,6 +81,8 @@ public class Avaliacao_FerramentasTest extends TestCase {
 		int output2 = af.adii("pmd");
 		assertEquals(0, output1);
 		assertEquals(0, output2);
+		assertEquals(output1, output2);
+		
 	}
 
 }
