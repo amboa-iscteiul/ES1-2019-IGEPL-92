@@ -2,16 +2,27 @@ package Project92.Project92;
 
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+
 import junit.framework.TestCase;
 
 public class Avaliacao_FerramentasTest extends TestCase {
+	
+	Avaliacao_Ferramentas avaliacao_ferramentas;
+	File file = new File("Long-Method.xlsx");
+	static XSSFSheet excel_sheet;
+	String ferramenta = new String("Qualquer texto entre aspas é uma String");
+	boolean aux;
+	ArrayList<Boolean> list;
 
 	public void testDci() {
-		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
-		int output1 = af.dci("iPlasma");
-		int output2 = af.dci("PWD");
-		assertNotEquals(0, output1);
-		assertNotEquals(0, output2);
+		ferramenta = "iPlasma";
+		assertNotNull(Avaliacao_Ferramentas.dci(ferramenta));
+		ferramenta = "PMD";
+		assertNotNull(Avaliacao_Ferramentas.dci(ferramenta));
 		
 	}
 
@@ -40,15 +51,24 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	}
 
 	public void testDii() {
-		fail("Not yet implemented");
+		ferramenta = "iPlasma";
+		assertNotNull(Avaliacao_Ferramentas.dii(ferramenta));
+		ferramenta = "PMD";
+		assertNotNull(Avaliacao_Ferramentas.dii(ferramenta));
 	}
 
 	public void testAdci() {
-		fail("Not yet implemented");
+		ferramenta = "iPlasma";
+		assertNotNull(Avaliacao_Ferramentas.adci(ferramenta));
+		ferramenta = "PMD";
+		assertNotNull(Avaliacao_Ferramentas.adci(ferramenta));
 	}
 
 	public void testAdii() {
-		fail("Not yet implemented");
+		ferramenta = "iPlasma";
+		assertNotNull(Avaliacao_Ferramentas.adii(ferramenta));
+		ferramenta = "PMD";
+		assertNotNull(Avaliacao_Ferramentas.adii(ferramenta));
 	}
 
 }

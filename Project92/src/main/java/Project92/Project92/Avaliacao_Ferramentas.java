@@ -32,17 +32,19 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
 		boolean aux;
-		boolean ferr_bool;
+		boolean ferr_bool_pmd;
+		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
-			ferr_bool = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
+			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
+			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux == ferr_bool && aux == true)
+				if (aux == ferr_bool_plasma && aux == true)
 					dci++;
 			}
 			else
-				if (aux == ferr_bool && aux == true)
+				if (aux == ferr_bool_pmd && aux == true)
 					dci++;;
 		}
 		return dci;
@@ -68,9 +70,6 @@ public class Avaliacao_Ferramentas {
 				
 				}
 			}
-			
-			
-			
 			
 		}
 		return dci;	
@@ -562,15 +561,19 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
 		boolean aux;
+		boolean ferr_bool_pmd;
+		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
+			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == false)
+				if (aux != ferr_bool_plasma  && aux == false)
 					dii++;
 			}
 			else
-				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
+				if (aux != ferr_bool_pmd && aux == false)
 					dii++;;
 		}
 		return dii;
@@ -580,15 +583,19 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
 		boolean aux;
+		boolean ferr_bool_pmd;
+		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
+			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux == excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == false)
+				if (aux == ferr_bool_plasma && aux == false)
 					adci++;
 			}
 			else
-				if (aux == excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
+				if (aux == ferr_bool_pmd && aux == false)
 					adci++;;
 		}
 		return adci;
@@ -598,15 +605,19 @@ public class Avaliacao_Ferramentas {
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
 		boolean aux;
+		boolean ferr_bool_pmd;
+		boolean ferr_bool_plasma;
 		int maxRows = excel_sheet.getLastRowNum();
 		for (int i = 1; i < maxRows; i++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
+			ferr_bool_pmd = excel_sheet.getRow(i).getCell(10).getBooleanCellValue();
+			ferr_bool_plasma = excel_sheet.getRow(i).getCell(9).getBooleanCellValue();
 			if (ferramenta.equals("iPlasma")) {
-				if (aux != excel_sheet.getRow(i).getCell(9).getBooleanCellValue() && aux == true)
+				if (aux != ferr_bool_plasma && aux == true)
 					adii++;
 			}
 			else
-				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == true)
+				if (aux != ferr_bool_pmd && aux == true) 
 					adii++;;
 		}
 		return adii;
