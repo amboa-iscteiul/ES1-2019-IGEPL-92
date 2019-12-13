@@ -17,13 +17,23 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	String ferramenta = new String("Qualquer texto entre aspas é uma String");
 	boolean aux;
 	ArrayList<Boolean> list;
+	
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
 
 	public void testDci() {
-		ferramenta = "iPlasma";
-		assertNotNull(Avaliacao_Ferramentas.dci(ferramenta));
-		ferramenta = "PMD";
-		assertNotNull(Avaliacao_Ferramentas.dci(ferramenta));
-		
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+		int output1 = af.dci("iPlasma");
+		int output2 = af.dci("pmd");
+		assertNotEquals(0, output1);
+		assertNotEquals(0, output2);
+		//assertEquals(0, output1);
+		//assertEquals(0, output1);
 	}
 
 	public void testCustomized_dci() {
@@ -51,10 +61,11 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	}
 
 	public void testDii() {
-		ferramenta = "iPlasma";
-		assertNotNull(Avaliacao_Ferramentas.dii(ferramenta));
-		ferramenta = "PMD";
-		assertNotNull(Avaliacao_Ferramentas.dii(ferramenta));
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+		int output1 = af.dii("iPlasma");
+		int output2 = af.dii("pmd");
+		assertEquals(0, output1);
+		assertNotEquals(0, output2);
 	}
 
 	public void testAdci() {
@@ -65,10 +76,11 @@ public class Avaliacao_FerramentasTest extends TestCase {
 	}
 
 	public void testAdii() {
-		ferramenta = "iPlasma";
-		assertNotNull(Avaliacao_Ferramentas.adii(ferramenta));
-		ferramenta = "PMD";
-		assertNotNull(Avaliacao_Ferramentas.adii(ferramenta));
+		Avaliacao_Ferramentas af = new Avaliacao_Ferramentas();
+		int output1 = af.adii("iPlasma");
+		int output2 = af.adii("pmd");
+		assertEquals(0, output1);
+		assertEquals(0, output2);
 	}
 
 }
