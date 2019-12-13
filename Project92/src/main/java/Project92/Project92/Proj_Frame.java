@@ -32,20 +32,28 @@ import javax.swing.filechooser.FileSystemView;
 
 public class Proj_Frame {
 
-	private JFrame frame;
+	public JFrame frame;
+	public JFrame aux;
+	
 	private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	private ArrayList<JLabel> pers_labels = new ArrayList<JLabel>();
-	private boolean show = false;
+	
+	public JRadioButton long_meth;
+	public JRadioButton feature_envy;
+	public JCheckBox isAdvanced;
 
+	private boolean show = false;
 	private boolean ativo_long = false;
 	private boolean ativo_feat = false;
 	private boolean proc_avancada = false;
 
 	private String operador_logico = "E";
-
 	private String visualizacao_geral = "Regra personalizada";
 
 	private JLabel regra_personalizada;
+	
+	public JButton pre_vis;
+	public JButton finish;
 
 	// DCI, DII, ADCI e ADII personalizados
 	private int dci = 0;
@@ -71,7 +79,7 @@ public class Proj_Frame {
 	 * results for each tool, including our customized tool within panels of their
 	 * own. South panel includes all buttons
 	 */
-	public void addFrameContent() {
+	private void addFrameContent() {
 		frame.setLayout(new BorderLayout());
 
 		JPanel tools_pane = new JPanel(new BorderLayout());
@@ -117,7 +125,7 @@ public class Proj_Frame {
 	 * 
 	 * @param up panel where the button will be inserted
 	 */
-	private void criarGrafico(JPanel up) {
+	public void criarGrafico(JPanel up) {
 		JButton grafico = new JButton("Comparar ferramentas");
 		up.add(grafico);
 		grafico.addActionListener(new ActionListener() {
@@ -190,14 +198,14 @@ public class Proj_Frame {
 	 * @param down panel where the button will be inserted
 	 * @see new aux frame with user's possible choices
 	 */
-	private void procura(JPanel down) {
+	public void procura(JPanel down) {
 		JButton proc = new JButton("Procura");
 		down.add(proc);
 		proc.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				// ComboBox para símbolos (< ou >) e caixa de texto para inserir thresholds
-				final JFrame aux = new JFrame("Procura Simples");
+				aux = new JFrame("Procura Simples");
 				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 				aux.setLocation(dimension.width / 2 - (200 / 2), dimension.height / 2 - (200 / 2));
 				aux.setVisible(true);
@@ -222,13 +230,13 @@ public class Proj_Frame {
 					labels_need.add(new JLabel("Thresholds e Sinais:"));
 
 				// criar itens usados em long_method
-				final JRadioButton long_meth = new JRadioButton("is_long_method");
+				long_meth = new JRadioButton("is_long_method");
 				final JPanel thresholds_long = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
 				final JLabel metrica1_long = new JLabel("CYCLO: "); // POR METRICA AQUI
 				final JLabel metrica2_long = new JLabel("LOC: "); // POR METRICA AQUI
-				final JTextField threshold_m1_long = new JTextField("nº limite");
-				final JTextField threshold_m2_long = new JTextField("nº limite");
+				final JTextField threshold_m1_long = new JTextField("0");
+				final JTextField threshold_m2_long = new JTextField("0");
 
 				// adicionar a thresholds_long
 				thresholds_long.add(labels_need.get(0));
@@ -247,13 +255,13 @@ public class Proj_Frame {
 				limites_sinais.setVisible(false);
 
 				// criar itens usados em feature
-				final JRadioButton feature_envy = new JRadioButton("feature_envy");
+				feature_envy = new JRadioButton("feature_envy");
 				final JPanel thresholds_feat = new JPanel(new GridLayout(2, 1)); // titulo mais painel
 				final JPanel limites_sinais_feat = new JPanel(new GridLayout(2, 3)); // metricas, Combo e Texto
 				final JLabel metrica1_feat = new JLabel("ATFD: "); // POR METRICA AQUI
 				final JLabel metrica2_feat = new JLabel("LAA: "); // POR METRICA AQUI
-				final JTextField threshold_m1_feat = new JTextField("Limite para ATFD");
-				final JTextField threshold_m2_feat = new JTextField("Limite para LAA");
+				final JTextField threshold_m1_feat = new JTextField("0");
+				final JTextField threshold_m2_feat = new JTextField("0");
 
 				// adicionar a thresholds_long
 				thresholds_feat.add(labels_need.get(1));
@@ -296,7 +304,6 @@ public class Proj_Frame {
 				feature_envy.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (feature_envy.isSelected() && !ativo_feat) {
-//							long_meth.setSelected(false); //fazer se tiver tempo
 							long_meth.setEnabled(false);
 							limites_sinais_feat.setVisible(true);
 							ativo_feat = true;
@@ -309,8 +316,8 @@ public class Proj_Frame {
 				});
 				// fazer e adicionar botões
 				JPanel botoes = new JPanel();
-				JButton pre_vis = new JButton("Pré-Visualizar");
-				JButton finish = new JButton("Ok");
+				pre_vis = new JButton("Pré-Visualizar");
+				finish = new JButton("Ok");
 
 				botoes.add(pre_vis);
 				botoes.add(finish);
@@ -325,7 +332,7 @@ public class Proj_Frame {
 				final JPanel avancada = new JPanel(new BorderLayout());
 				final JPanel alterar = new JPanel();
 				alterar.setVisible(false);
-				final JCheckBox isAdvanced = new JCheckBox("Procura Avançada");
+				isAdvanced = new JCheckBox("Procura Avançada");
 				// reage conforme querer ou não
 				isAdvanced.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -481,7 +488,12 @@ public class Proj_Frame {
 								dii = Avaliacao_Ferramentas.customized_dii(list,"long");
 								adci = Avaliacao_Ferramentas.customized_adci(list,"long");
 								adii = Avaliacao_Ferramentas.customized_adii(list,"long");
-								System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
+								
+								getLabel("DCI").setText("" + dci);
+								getLabel("DII").setText("" + dii);
+								getLabel("ADCI").setText("" + adci);
+								getLabel("ADII").setText("" + adii);
+							
 							} else if (feature_envy.isSelected()) {
 								String Simbolo_1 = (String) combos.get(2).getSelectedItem();
 								String Simbolo_2 = (String) combos.get(3).getSelectedItem();
@@ -496,7 +508,11 @@ public class Proj_Frame {
 								dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
 								adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
 								adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
-								System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
+								
+								getLabel("DCI").setText("" + dci);
+								getLabel("DII").setText("" + dii);
+								getLabel("ADCI").setText("" + adci);
+								getLabel("ADII").setText("" + adii);
 							}
 
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
@@ -543,7 +559,10 @@ public class Proj_Frame {
 							dii = Avaliacao_Ferramentas.customized_dii(list,"envy");
 							adci = Avaliacao_Ferramentas.customized_adci(list,"envy");
 							adii = Avaliacao_Ferramentas.customized_adii(list,"envy");
-							System.out.println("dci = " + dci + " dii = " + dii + " adci = " + adci + " adii = " + adii);
+							getLabel("DCI").setText("" + dci);
+							getLabel("DII").setText("" + dii);
+							getLabel("ADCI").setText("" + adci);
+							getLabel("ADII").setText("" + adii);
 							
 							alterarVis(metrica1_long, metrica2_long, threshold_m1_long, threshold_m2_long, combos);
 
@@ -572,7 +591,7 @@ public class Proj_Frame {
 	 * @param def used to decide which label we will be getting
 	 * @return returns the label which corresponds with the string parameter
 	 */
-	private JLabel getLabel(String def) {
+	public JLabel getLabel(String def) {
 		switch (def) {
 		case "DCI":
 			return pers_labels.get(0);
@@ -613,7 +632,7 @@ public class Proj_Frame {
 		alterar.add(operadores);
 	}
 
-	private void abrirExcel(JPanel up) {
+	public void abrirExcel(JPanel up) {
 		JButton open_excel = new JButton("Abrir Excel");
 		up.add(open_excel);
 		open_excel.addActionListener(new ActionListener() {
@@ -630,7 +649,7 @@ public class Proj_Frame {
 
 	// ALTERAR O "VER EXCEL" PARA SUPORTAR QUALQUER FICHEIRO EXCEL ESCOLHIDO PELO
 	// IMPORT
-	private void importarExcel(JPanel down) {
+	public void importarExcel(JPanel down) {
 		JButton import_excel = new JButton("Importar Excel");
 		down.add(import_excel);
 		import_excel.addActionListener(new ActionListener() {
@@ -657,7 +676,7 @@ public class Proj_Frame {
 		});
 	}
 
-	private void consultarIndicadores(JPanel metodos, JPanel up) {
+	public void consultarIndicadores(JPanel metodos, JPanel up) {
 		for (int i = 1; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
 				switch (i) {
@@ -743,9 +762,6 @@ public class Proj_Frame {
 					}
 					metodos.add(label3);
 					break;
-				default:
-					System.out.println("ALGUMA COISA ERRADA");
-					break;
 				}
 			}
 		}
@@ -768,7 +784,7 @@ public class Proj_Frame {
 		up.add(activate, BorderLayout.SOUTH);
 	}
 
-	public void init() {
+	private void init() {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dimension.width / 2 - (300 / 2), dimension.height / 2 - (150 / 2));
 		frame.setSize(400, 250);
