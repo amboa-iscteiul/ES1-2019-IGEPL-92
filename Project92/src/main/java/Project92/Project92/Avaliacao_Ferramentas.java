@@ -14,14 +14,7 @@ public class Avaliacao_Ferramentas {
 	private static File file = new File("Long-Method.xlsx");
 	private static XSSFSheet excel_sheet;
 
-	public static void main(String[] args) {
-		Avaliacao_Ferramentas.getSheet();
-		Avaliacao_Ferramentas.dii("iPlasma");
-		//normal_search(">", 5, "<",10 );
-		//Advance_search("LAA", "<", 0.3, "LOC", "<", 10, "AND");
 	
-	}
-
 	private static void getSheet() {
 		try {
 			FileInputStream file = new FileInputStream(Avaliacao_Ferramentas.file);
