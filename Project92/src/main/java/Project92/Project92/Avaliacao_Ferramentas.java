@@ -14,14 +14,7 @@ public class Avaliacao_Ferramentas {
 	private static File file = new File("Long-Method.xlsx");
 	private static XSSFSheet excel_sheet;
 
-	public static void main(String[] args) {
-		Avaliacao_Ferramentas.getSheet();
-		Avaliacao_Ferramentas.dii("iPlasma");
-		//normal_search(">", 5, "<",10 );
-		Advance_search("LAA", "<", 0.3, "LOC", "<", 10, "AND");
 	
-	}
-
 	private static void getSheet() {
 		try {
 			FileInputStream file = new FileInputStream(Avaliacao_Ferramentas.file);
@@ -52,65 +45,116 @@ public class Avaliacao_Ferramentas {
 				if (aux == ferr_bool && aux == true)
 					dci++;;
 		}
-		System.out.println("DCI da ferramenta " + ferramenta + " é igual a: " + dci);
 		return dci;
 	}
-	public static int customized_dci(ArrayList<Boolean> list) {
+	public static int customized_dci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dci = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(aux == list.get(j) && aux == true) {
 				dci++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(aux == list.get(j) && aux == true) {
+					dci++;
+				
+				}
+			}
+			
+			
+			
+			
+		}
 		return dci;	
 	}
-	public static int customized_dii(ArrayList<Boolean> list) {
+	public static int customized_dii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int dii = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==true && aux == false) {
 				dii++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==true && aux == false) {
+					dii++;
+				}
+			}	
+		}
+		
+		
+		
+		
 		return dii;	
 	}
-	public static int customized_adci(ArrayList<Boolean> list) {
+	public static int customized_adci(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adci = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==false && aux == false) {
 				adci++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==false && aux == false) {
+					adci++;
+				}
+			}
+		}
 		return adci;	
 	}
-	public static int customized_adii(ArrayList<Boolean> list) {
+	public static int customized_adii(ArrayList<Boolean> list,String met) {
 		Avaliacao_Ferramentas.getSheet();
 		int adii = 0;
 		int maxRows = excel_sheet.getLastRowNum();
 		boolean aux;
+		if(met.equals("long")) {
 		for (int i = 1,j=0; i < maxRows; i++,j++) {
 			aux = excel_sheet.getRow(i).getCell(8).getBooleanCellValue();
 			if(list.get(j)==false && aux == true) {
 				adii++;
 			}
 		}
+		}
+		else if(met.equals("envy")) {
+			for (int i = 1,j=0; i < maxRows; i++,j++) {
+				aux = excel_sheet.getRow(i).getCell(11).getBooleanCellValue();
+				if(list.get(j)==false && aux == true) {
+					adii++;
+				}
+			}
+			
+			
+		}
 		return adii;	
 	}
 	
 	
 	
-	public static ArrayList<Boolean> normal_search(String Met,String s_cyclo,double threshold_cyclo,String s_loc,double threshold_loc,String s_atfd,double threshold_atfd,String s_laa,double threshold_laa) {
+	public static ArrayList<Boolean> normal_search(String Met,String s1,double t1,String s2,double t2) {
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		int maxRows = excel_sheet.getLastRowNum();
 		
@@ -118,12 +162,12 @@ public class Avaliacao_Ferramentas {
 		if(Met.equals("long")) {
 		double CYCLO;
 		double LOC; 
-			 if(s_cyclo.equals(s_loc) && s_cyclo.equals("<")) {
+			 if(s1.equals(s2) && s1.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 				 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
 				 
-				 if(CYCLO < threshold_cyclo && LOC < threshold_loc) {
+				 if(CYCLO < t1 && LOC < t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -132,12 +176,12 @@ public class Avaliacao_Ferramentas {
 				 }
 				 
 			 }
-			 else if(s_cyclo.equals(s_loc) && s_cyclo.equals(">")) {
+			 else if(s1.equals(s2) && s1.equals(">")) {
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
 					 
-				 if(CYCLO > threshold_cyclo && LOC > threshold_loc) {
+				 if(CYCLO > t1 && LOC > t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -147,12 +191,12 @@ public class Avaliacao_Ferramentas {
 				
 			 }
 			 
-			 else if(s_cyclo.equals(">") && s_loc.equals("<")) {
+			 else if(s1.equals(">") && s2.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
 				 
-				 if(CYCLO > threshold_cyclo && LOC < threshold_loc) {
+				 if(CYCLO > t1 && LOC < t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -161,11 +205,11 @@ public class Avaliacao_Ferramentas {
 				 
 				 } 
 			 }
-			 else if(s_cyclo.equals("<") && s_loc.equals(">")) {
+			 else if(s1.equals("<") && s2.equals(">")) {
 				 for (int i = 1; i < maxRows; i++) {
 					 CYCLO= excel_sheet.getRow(i).getCell(5).getNumericCellValue();
 					 LOC= excel_sheet.getRow(i).getCell(4).getNumericCellValue();
-				 if(CYCLO < threshold_cyclo && LOC > threshold_loc) {
+				 if(CYCLO < t1 && LOC > t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -179,7 +223,7 @@ public class Avaliacao_Ferramentas {
 			double ATFD;
 			double LAA; 
 			
-			if(s_atfd.equals(s_laa) && s_cyclo.equals("<")) {
+			if(s1.equals(s2) && s1.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
 				 
@@ -189,7 +233,7 @@ public class Avaliacao_Ferramentas {
 				 else {
 					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
 				 }
-				 if(ATFD < threshold_cyclo && LAA < threshold_loc) {
+				 if(ATFD < t1 && LAA < t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -198,7 +242,7 @@ public class Avaliacao_Ferramentas {
 				 }
 				 
 			 }
-			if(s_atfd.equals(s_loc) && s_laa.equals(">")) {
+			if(s1.equals(s2) && s1.equals(">")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
 				 
@@ -208,7 +252,7 @@ public class Avaliacao_Ferramentas {
 				 else {
 					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
 				 }
-				 if(ATFD > threshold_cyclo && LAA > threshold_loc) {
+				 if(ATFD > t1 && LAA > t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -217,7 +261,7 @@ public class Avaliacao_Ferramentas {
 				 }
 				 
 			 }
-			if(s_atfd.equals(">") && s_laa.equals("<")) {
+			if(s1.equals(">") && s2.equals("<")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
 				 
@@ -227,7 +271,7 @@ public class Avaliacao_Ferramentas {
 				 else {
 					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
 				 }
-				 if(ATFD > threshold_cyclo && LAA < threshold_loc) {
+				 if(ATFD > t1 && LAA < t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -237,7 +281,7 @@ public class Avaliacao_Ferramentas {
 				 
 			 }
 			
-			if(s_atfd.equals("<") && s_laa.equals(">")) {
+			if(s1.equals("<") && s2.equals(">")) {
 				 for (int i = 1; i < maxRows; i++) {
 				 ATFD= excel_sheet.getRow(i).getCell(6).getNumericCellValue();
 				 
@@ -247,7 +291,7 @@ public class Avaliacao_Ferramentas {
 				 else {
 					 LAA= excel_sheet.getRow(i).getCell(7).getNumericCellValue();
 				 }
-				 if(ATFD < threshold_cyclo && LAA > threshold_loc) {
+				 if(ATFD < t1 && LAA > t2) {
 					 list.add(true);
 				 }
 				 else {
@@ -529,7 +573,6 @@ public class Avaliacao_Ferramentas {
 				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					dii++;;
 		}
-		System.out.println("DII da ferramenta " + ferramenta + " é igual a: " + dii);
 		return dii;
 	}
 
@@ -548,7 +591,6 @@ public class Avaliacao_Ferramentas {
 				if (aux == excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == false)
 					adci++;;
 		}
-		System.out.println("ADCI da ferramenta " + ferramenta + " é igual a: " + adci);
 		return adci;
 	}
 
@@ -567,7 +609,6 @@ public class Avaliacao_Ferramentas {
 				if (aux != excel_sheet.getRow(i).getCell(10).getBooleanCellValue() && aux == true)
 					adii++;;
 		}
-		System.out.println("ADII da ferramenta " + ferramenta + " é igual a: " + adii);
 		return adii;
 	}
 

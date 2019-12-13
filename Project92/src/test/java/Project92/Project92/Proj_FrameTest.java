@@ -1,42 +1,22 @@
 package Project92.Project92;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
-import java.util.ArrayList;
+public class Proj_FrameTest extends TestCase {
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-public class Proj_FrameTest {
-
-	JFrame frame;
-	ArrayList<JLabel> labels = new ArrayList<JLabel>();
-	private boolean show = false;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void testProj_Frame() {
+		fail("Not yet implemented");
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public void testAddFrameContent() {
+		fail("Not yet implemented");
 	}
 
-	@Before
-	public void setUp() throws Exception {
+	public void testInit() {
+		fail("Not yet implemented");
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test() {
+	public void testMain() {
 		fail("Not yet implemented");
 	}
 
