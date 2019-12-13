@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ViewportLayout;
 
 /**
  * 
@@ -21,6 +20,7 @@ public class Table {
 	/**
 	 * Results of detection
 	 */
+
 	String pmddci =(""+Avaliacao_Ferramentas.dci("PMD"));
 	String pmddii =(""+Avaliacao_Ferramentas.dii("PMD"));
 	String pmdadci =(""+Avaliacao_Ferramentas.adci("PMD"));
