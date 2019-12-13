@@ -14,11 +14,13 @@ import javax.swing.ViewportLayout;
  * @author ES1-2019-IGEPL-92
  *
  */
-
 public class Table {
 	
 	public static Avaliacao_Ferramentas Avaliacao_Ferramentas = new Avaliacao_Ferramentas();
 
+	/**
+	 * Results of detection
+	 */
 	String pmddci =(""+Avaliacao_Ferramentas.dci("PMD"));
 	String pmddii =(""+Avaliacao_Ferramentas.dii("PMD"));
 	String pmdadci =(""+Avaliacao_Ferramentas.adci("PMD"));
@@ -30,12 +32,9 @@ public class Table {
 
 
 	/**
-	 * Method to create a table about the result of detection 
-	 * @see Shows a result table 
-	 * 
+	 * Method to create a table to compare the result of detection  
 	 */
-	
-	public void criarJanela() {
+	public void criarTabela() {
 		
 	//Criação e configuração do frame
 	JFrame aux= new JFrame("Tabela");
@@ -56,6 +55,7 @@ public class Table {
 	aux.add(b, BorderLayout.CENTER);
 	aux.setVisible(true);
 	aux.pack();
+	
 	}
 	
 }
